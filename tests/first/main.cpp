@@ -16,14 +16,31 @@ public:
 		std::cout << "Home scene constructed.\n";
 	};
 
-	void on_start()
+	void on_entry()
 	{
 		std::cout << "Entered home\n";
 	}
 
-	void on_update()
+	void on_event(SparkyEvent event)
 	{
-		app->switch_scene("School");
+		if (event.type == SDL_KEYDOWN)
+		{
+			switch (event.key.keysym.sym)
+			{
+				case SDLK_RETURN:
+					app->switch_scene("School");
+					break;
+			}
+		}
+	}
+
+	void on_update(double dt)
+	{
+	}
+
+	void on_exit()
+	{
+		std::cout << "Leaving home\n";
 	}
 };
 
@@ -39,13 +56,31 @@ public:
 		std::cout << "School scene constructed.\n";
 	};
 
-	void on_start()
+	void on_entry()
 	{
 		std::cout << "Entered school\n";
 	}
-	
-	void on_update()
+
+	void on_event(SparkyEvent event)
 	{
+		if (event.type == SDL_KEYDOWN)
+		{
+			switch (event.key.keysym.sym)
+			{
+				case SDLK_RETURN:
+					app->switch_scene("Home");
+					break;
+			}
+		}
+	}
+	
+	void on_update(double dt)
+	{
+	}
+
+	void on_exit()
+	{
+		std::cout << "Leaving School\n";
 	}
 };
 
@@ -66,5 +101,5 @@ public:
 int main()
 {
 	Test test;
-	test.run("Sparky application", 800, 600);
+	test.run("Sparky application", 800, 600, 60.0f);
 }

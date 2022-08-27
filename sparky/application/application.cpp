@@ -1,7 +1,8 @@
 #include "application.h"
 
-void Application::run(const std::string& title, int width, int height)
+void Application::run(const std::string& title, int width, int height, float fps)
 {
+	this->fps = fps;
 	this->window = std::make_shared<Window>(title, width, height);
 
 	// Calling application startup
@@ -25,8 +26,10 @@ void Application::switch_scene(const std::string& name)
 	if (this->scenes.find(name) == this->scenes.end())
 		Log::error("Scene with name `" + name + "` doesn`t exists.", SPARKY_NULL);
 
+	if (this->curr_scene != "")
+		this->scenes[this->curr_scene]->on_exit();
 	this->curr_scene = name;
-	this->scenes[this->curr_scene]->on_start();
+	this->scenes[this->curr_scene]->on_entry();
 }
 
 void Application::app_event()
@@ -34,16 +37,32 @@ void Application::app_event()
 	while (SDL_PollEvent(&this->event))
 	{
 		if (this->event.type == SDL_QUIT) this->destroy();
+
+		// Passing event to the current scene
+		this->scenes[this->curr_scene]->on_event(this->event);
 	}
 }
 
 void Application::app_loop()
 {
+	float req_frame = 1000.0f / this->fps;
 	while (!this->window->is_closed())
 	{
+		auto start_t = std::chrono::high_resolution_clock::now();
+
 		// Calling application event loop
 		this->app_event();
-		this->scenes[this->curr_scene]->on_update();
+
+		// Updating current scene
+		this->scenes[this->curr_scene]->on_update(this->dt);
+
+		// Calculating delta time
+		auto end_t = std::chrono::high_resolution_clock::now();
+		this->dt = std::chrono::duration<double, std::milli>(end_t - start_t).count();
+
+		// Capping frame rate
+		if (req_frame > this->dt)
+			SDL_Delay(req_frame - this->dt);
 	}
 }
 

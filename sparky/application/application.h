@@ -12,7 +12,7 @@ public:
 	virtual void on_start() {};
 
 	// Entry point
-	void run(const std::string& title, int width, int height);
+	void run(const std::string& title, int width, int height, float fps);
 	void destroy();
 
 	// Function to add new scenes
@@ -38,6 +38,10 @@ private:
 	// Stores scenes
 	std::unordered_map<std::string, std::shared_ptr<Scene>> scenes;
 	std::string curr_scene;
+
+	// Delta Time
+	float fps;
+	double dt;
 
 private:
 	void app_loop();

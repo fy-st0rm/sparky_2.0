@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <chrono>
 
 // SDL
 #include <SDL2/SDL.h>
