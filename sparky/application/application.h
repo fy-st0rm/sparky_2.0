@@ -4,6 +4,11 @@
 #include "scene.h"
 #include "../window/window.h"
 
+//TODO: [ ] Buffers
+//TODO: [ ] Shaders
+//TODO: [ ] Renderers
+//TODO: [ ] Cameras
+
 
 class Application
 {
