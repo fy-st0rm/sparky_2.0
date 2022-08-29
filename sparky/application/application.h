@@ -30,6 +30,10 @@ public:
 	void switch_scene(const std::string& name);
 
 public:
+	// Overriddens
+	inline void clear(glm::vec4 color) { this->window->clear(color); }
+
+public:
 	// Getters
 	inline int get_win_width()  const { return window->get_width();  }
 	inline int get_win_height() const { return window->get_height(); }

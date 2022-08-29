@@ -48,6 +48,7 @@ void Application::app_loop()
 	float req_frame = 1000.0f / this->fps;
 	while (!this->window->is_closed())
 	{
+		this->clear({0.0f, 0.0f, 0.0f, 1.0f});
 		auto start_t = std::chrono::high_resolution_clock::now();
 
 		// Calling application event loop
@@ -63,6 +64,9 @@ void Application::app_loop()
 		// Capping frame rate
 		if (req_frame > this->dt)
 			SDL_Delay(req_frame - this->dt);
+
+		// Updating window
+		this->window->update();
 	}
 }
 

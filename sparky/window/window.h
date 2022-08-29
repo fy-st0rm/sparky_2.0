@@ -10,6 +10,10 @@ public:
 	~Window();
 
 public:
+	void clear(glm::vec4 color);
+	void update();
+
+public:
 	// Setters
 	inline void destroy()   { this->closed = true; }
 

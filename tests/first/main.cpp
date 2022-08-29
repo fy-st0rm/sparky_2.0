@@ -4,15 +4,19 @@ struct ArgStruct {
 	Application* app;
 };
 
+
 class Home : public Scene
 {
 private:
 	Application* app;
+	std::shared_ptr<BoxRenderer> renderer;
 
 public:
 	Home(void* arg_struct)
 	{
 		app = ((ArgStruct*)arg_struct)->app;
+
+		this->renderer = std::make_shared<BoxRenderer>(10);
 		std::cout << "Home scene constructed.\n";
 	};
 
@@ -23,64 +27,16 @@ public:
 
 	void on_event(SparkyEvent event)
 	{
-		if (event.type == SDL_KEYDOWN)
-		{
-			switch (event.key.keysym.sym)
-			{
-				case SDLK_RETURN:
-					app->switch_scene("School");
-					break;
-			}
-		}
 	}
 
 	void on_update(double dt)
 	{
+		renderer->render();
 	}
 
 	void on_exit()
 	{
 		std::cout << "Leaving home\n";
-	}
-};
-
-class School : public Scene
-{
-private:
-	Application* app;
-
-public:
-	School(void* arg_struct) 
-	{
-		app = ((ArgStruct*)arg_struct)->app;
-		std::cout << "School scene constructed.\n";
-	};
-
-	void on_entry()
-	{
-		std::cout << "Entered school\n";
-	}
-
-	void on_event(SparkyEvent event)
-	{
-		if (event.type == SDL_KEYDOWN)
-		{
-			switch (event.key.keysym.sym)
-			{
-				case SDLK_RETURN:
-					app->switch_scene("Home");
-					break;
-			}
-		}
-	}
-	
-	void on_update(double dt)
-	{
-	}
-
-	void on_exit()
-	{
-		std::cout << "Leaving School\n";
 	}
 };
 
@@ -93,7 +49,6 @@ public:
 	{
 		ArgStruct arg = {this};
 		add_scene<Home>("Home", &arg);
-		add_scene<School>("School", &arg);
 		switch_scene("Home");
 	}
 };

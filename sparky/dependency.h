@@ -9,31 +9,11 @@
 #include <unordered_map>
 #include <chrono>
 
-// SDL
+// Third party
+#include "vendor/glm/glm.hpp"
+
+// Graphics library
+#include <GL/glew.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
-
-/*
-// Opengl Error handling
-#define ASSERT(x) if (!(x)) exit(1);
-#define GLCall(x) ClearError(); \
-x;\
-ASSERT(ErrorLog(#x, __FILE__, __LINE__))
-
-static void ClearError()
-{
-    while(glGetError());
-}
-
-static bool ErrorLog(const char* function, const char* file, int line)
-{
-	GLenum error;
-    while (error = glGetError())
-    {
-        fprintf(stderr, "[Error code]: %s\n", error);
-        fprintf(stderr, "[Opengl error]: %s %s: %d\n", function ,file, line);
-        return false;
-    }
-    return true;
-}
-*/

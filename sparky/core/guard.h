@@ -1,10 +1,35 @@
 #pragma once
 #include "log.h"
 
+// Macros to handle opengl errors
+#define SP_ASSERT(x) if (!(x)) exit(1);
+#define GLCall(x) SPGuard::clear_error(); \
+x;\
+SP_ASSERT(SPGuard::error_log(#x, __FILE__, __LINE__))
+
+// Class for error handling
 class SPGuard
 {
 public:
 	// SDL Error checker
 	static int sdl_check(int result);
 	static void* sdl_check_ptr(void* result);
+
+	// Opengl error checker
+	static void clear_error()
+	{
+		while (glGetError());
+	}
+
+	static bool error_log(const char* function, const char* file, int line)
+	{
+		GLenum error;
+		while (error = glGetError())
+		{
+			Log::error("[Error code]: " + error, SPARKY_NULL);
+			Log::error("[Opengl error]: " + std::string(function) + " " +  file + std::to_string(line), SPARKY_NULL);
+			return false;
+		}
+		return true;
+	}
 };
