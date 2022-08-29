@@ -4,7 +4,7 @@
 #include "scene.h"
 #include "../window/window.h"
 
-//TODO: [ ] Buffers
+//TODO: [X] Buffers
 //TODO: [ ] Shaders
 //TODO: [ ] Renderers
 //TODO: [ ] Cameras

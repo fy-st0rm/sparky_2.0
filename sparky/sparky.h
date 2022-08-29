@@ -5,4 +5,4 @@
 #include "application/scene.h"
 
 // Renderer
-#include "renderer/box_renderer.h"
+#include "renderer/quad_renderer.h"

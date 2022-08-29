@@ -9,14 +9,16 @@ class Home : public Scene
 {
 private:
 	Application* app;
-	std::shared_ptr<BoxRenderer> renderer;
+	std::shared_ptr<QuadRenderer> renderer;
+	
+	float x = 0.0f;
 
 public:
 	Home(void* arg_struct)
 	{
 		app = ((ArgStruct*)arg_struct)->app;
 
-		this->renderer = std::make_shared<BoxRenderer>(10);
+		this->renderer = std::make_shared<QuadRenderer>(10);
 		std::cout << "Home scene constructed.\n";
 	};
 
@@ -31,7 +33,11 @@ public:
 
 	void on_update(double dt)
 	{
-		renderer->render();
+		renderer->render_begin();
+		Quad quad = renderer->create_quad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.5, 0.5));
+		renderer->push_quad(quad);
+		renderer->render_end();
+		x += 0.01f;
 	}
 
 	void on_exit()
