@@ -1,5 +1,6 @@
 #pragma once
 #include "../buffers/buffers.h"
+#include "../shader/shader.h"
 #include "vertex.h"
 
 
@@ -14,7 +15,7 @@ public:
 	void render_begin();
 	void render_end();
 
-	Quad create_quad(glm::vec3 pos, glm::vec2 size);
+	Quad create_quad(glm::vec3 pos, glm::vec2 size, glm::vec4 color);
 	void push_quad(const Quad& quad);
 
 private:
@@ -30,4 +31,5 @@ private:
 	std::shared_ptr<VertexArray> vert_array;
 	std::shared_ptr<VertexBuffer> vert_buff;
 	std::shared_ptr<IndexBuffer> idx_buff;
+	std::shared_ptr<Shader> shader;
 };

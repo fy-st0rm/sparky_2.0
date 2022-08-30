@@ -34,7 +34,7 @@ public:
 	void on_update(double dt)
 	{
 		renderer->render_begin();
-		Quad quad = renderer->create_quad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.5, 0.5));
+		Quad quad = renderer->create_quad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.5, 0.5), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 		renderer->push_quad(quad);
 		renderer->render_end();
 		x += 0.01f;

@@ -13,7 +13,7 @@ public:
 	void push_layout(int count, int stride)
 	{
 		GLCall(glEnableVertexAttribArray(this->layout_idx));
-		GLCall(glVertexAttribPointer(this->layout_idx, count, this->get_gl_type<T>(), GL_FALSE, stride, (const void*)&this->layout_offset));
+		GLCall(glVertexAttribPointer(this->layout_idx, count, this->get_gl_type<T>(), GL_FALSE, stride, (const void*) this->layout_offset));
 		this->layout_idx++;
 		this->layout_offset += count * sizeof(T);
 	}
@@ -38,5 +38,5 @@ private:
 private:
 	unsigned int buff_id;
 	unsigned int layout_idx = 0;
-	unsigned int layout_offset = 0;
+	size_t layout_offset = 0;
 };
