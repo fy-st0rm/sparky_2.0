@@ -7,29 +7,31 @@
 x;\
 SP_ASSERT(SPGuard::error_log(#x, __FILE__, __LINE__))
 
-// Class for error handling
-class SPGuard
-{
-public:
-	// SDL Error checker
-	static int sdl_check(int result);
-	static void* sdl_check_ptr(void* result);
-
-	// Opengl error checker
-	static void clear_error()
+namespace Sparky {
+	// Class for error handling
+	class SPGuard
 	{
-		while (glGetError());
-	}
-
-	static bool error_log(const char* function, const char* file, int line)
-	{
-		GLenum error;
-		while (error = glGetError())
+	public:
+		// SDL Error checker
+		static int sdl_check(int result);
+		static void* sdl_check_ptr(void* result);
+	
+		// Opengl error checker
+		static void clear_error()
 		{
-			Log::error("[Error code]: " + error, SPARKY_NULL);
-			Log::error("[Opengl error]: " + std::string(function) + " " +  file + std::to_string(line), SPARKY_NULL);
-			return false;
+			while (glGetError());
 		}
-		return true;
-	}
-};
+	
+		static bool error_log(const char* function, const char* file, int line)
+		{
+			GLenum error;
+			while (error = glGetError())
+			{
+				Log::warning("[Error code]: " + std::to_string(error), SPARKY_NULL);
+				Log::error("[Opengl error]: " + std::string(function) + " " +  file + " " + std::to_string(line), SPARKY_NULL);
+				return false;
+			}
+			return true;
+		}
+	};
+}

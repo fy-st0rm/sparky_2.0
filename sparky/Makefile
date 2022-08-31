@@ -8,6 +8,7 @@ cmp:
 	$(MAKE) --no-print-directory cmp_window
 	$(MAKE) --no-print-directory cmp_buffers
 	$(MAKE) --no-print-directory cmp_shader
+	$(MAKE) --no-print-directory cmp_texture
 	$(MAKE) --no-print-directory cmp_renderer
 	$(MAKE) --no-print-directory cmp_app
 	$(MAKE) --no-print-directory build
@@ -31,6 +32,9 @@ cmp_buffers:
 
 cmp_shader:
 	$(CC) $(INC) -c shader/*.cpp
+
+cmp_texture:
+	$(CC) $(INC) -c texture/*.cpp
 
 cmp_renderer:
 	$(CC) $(INC) -c renderer/*.cpp
