@@ -5,7 +5,7 @@ namespace Sparky {
 		:max_quad_cnt(max_quad_cnt), max_idx_cnt(max_quad_cnt * 6), max_buff_size(max_quad_cnt * sizeof(Vertex) * 4)
 	{
 		// Resizing the buffer to its max capacity
-		this->buffer.resize(max_quad_cnt * 4);
+		this->buffer = (float*) malloc(this->max_buff_size);
 	
 		// Constructing the buffers
 		this->vert_array = std::make_shared<VertexArray>();
@@ -34,7 +34,7 @@ namespace Sparky {
 	
 	QuadRenderer::~QuadRenderer()
 	{
-		this->buffer.clear();
+		delete this->buffer;
 	}
 	
 	void QuadRenderer::generate_default_texture()
@@ -66,7 +66,7 @@ namespace Sparky {
 	void QuadRenderer::render_begin()
 	{
 		this->buff_idx = 0;
-		this->buffer.clear();
+		memset(this->buffer, 0, this->max_buff_size);
 	}
 	
 	void QuadRenderer::render_end()
@@ -76,7 +76,7 @@ namespace Sparky {
 	
 		// Pushing the vertex data into the vertex buffer
 		this->vert_buff->bind();
-		this->vert_buff->push_data(0, this->max_buff_size, this->buffer.data());
+		this->vert_buff->push_data(0, this->max_buff_size, this->buffer);
 	
 		// Drawcall
 		this->shader->bind();
@@ -135,15 +135,39 @@ namespace Sparky {
 		}
 	
 		for (int i = 0; i < 4; i++)
-			this->buffer.push_back(quad.vertex[i]);
-		this->buff_idx += 4 * VERTEX_SIZE;
+		{
+			this->buffer[this->buff_idx++] = quad.vertex[i].pos.x;
+			this->buffer[this->buff_idx++] = quad.vertex[i].pos.y;
+			this->buffer[this->buff_idx++] = quad.vertex[i].pos.z;
+			this->buffer[this->buff_idx++] = quad.vertex[i].color.r;
+			this->buffer[this->buff_idx++] = quad.vertex[i].color.g;
+			this->buffer[this->buff_idx++] = quad.vertex[i].color.b;
+			this->buffer[this->buff_idx++] = quad.vertex[i].color.a;
+			this->buffer[this->buff_idx++] = quad.vertex[i].tex_cord.x;
+			this->buffer[this->buff_idx++] = quad.vertex[i].tex_cord.y;
+			this->buffer[this->buff_idx++] = quad.vertex[i].tex_id;
+		}
 	}
 	
 	void QuadRenderer::print_buffer()
 	{
-		for (int i = 0; i < this->buffer.size(); i += VERTEX_SIZE)
+		std::cout << "Printing buffer:\n";
+		int j = 0, k = 0;
+		for (int i = 0; i < this->buff_idx; i++)
 		{
-			std::cout << this->buffer[i].pos.x << " " << this->buffer[i].pos.y << " " << this->buffer[i].pos.z << " " << this->buffer[i].color.r << " " << this->buffer[i].color.g << " " << this->buffer[i].color.b << " " << this->buffer[i].color.a << " " << this->buffer[i].tex_cord.x << " " << this->buffer[i].tex_cord.y << " " << this->buffer[i].tex_id << std::endl;
+			j++;
+			std::cout << this->buffer[i] << " ";
+			if (j == VERTEX_SIZE)
+			{
+				std::cout << std::endl;
+				j = 0;
+				k++;
+			}
+			if (k == 4)
+			{
+				std::cout << std::endl;
+				k = 0;
+			}
 		}
 	}
 }

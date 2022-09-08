@@ -38,6 +38,6 @@ namespace Sparky {
 			offset += 4;
 		}
 		this->bind();
-		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(this->indices), this->indices.data(), GL_STATIC_DRAW));
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->size, this->indices.data(), GL_STATIC_DRAW));
 	}
 }

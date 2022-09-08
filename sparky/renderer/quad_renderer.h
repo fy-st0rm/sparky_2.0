@@ -33,7 +33,7 @@ namespace Sparky {
 	
 		// Vertices buffer
 		int buff_idx;
-		std::vector<Vertex> buffer;
+		float* buffer;
 	
 		// Texture buffer
 		std::vector<float> texture_slots;
