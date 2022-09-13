@@ -11,6 +11,7 @@
 
 // Third party
 #include "vendor/glm/glm.hpp"
+#include "vendor/glm/gtc/matrix_transform.hpp"
 
 // Graphics library
 #include <GL/glew.h>

@@ -65,9 +65,7 @@ namespace Sparky {
 			GLCall(glDeleteShader(id));
 			return 0;
 		}
-	
 		return id;
-	
 	}
 	
 	int Shader::get_uniform_location(const std::string& name)
@@ -75,7 +73,7 @@ namespace Sparky {
 		if (this->uniform_locations.find(name) != this->uniform_locations.end())
 			return this->uniform_locations[name];
 	
-		int loc = glGetUniformLocation(this->get_shader_id(), "textures");
+		int loc = glGetUniformLocation(this->get_shader_id(), name.c_str());
 		if (loc == -1)
 			Log::error("Cannot find uniform `" + name + "` in the shader.\n", SPARKY_NULL);
 	

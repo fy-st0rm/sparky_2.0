@@ -4,6 +4,8 @@
 #include "../texture/texture.h"
 #include "vertex.h"
 
+//TODO: Implement switchable shaders
+
 
 namespace Sparky {
 	class QuadRenderer
@@ -20,6 +22,10 @@ namespace Sparky {
 		Quad create_quad(glm::vec3 pos, glm::vec2 size, glm::vec4 color, glm::vec4 tex_cord, const Texture& texture);
 		void push_quad(const Quad& quad);
 		void print_buffer();
+
+	public:
+		// Getters and setters
+		std::shared_ptr<Shader> get_shader() const { return this->shader; }
 	
 	private:
 		void generate_default_texture();

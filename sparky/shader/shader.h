@@ -21,7 +21,7 @@ namespace Sparky {
 	"	out_color = in_color;\n"
 	"	out_tex_cord = in_tex_cord;\n"
 	"	out_tex_id = in_tex_id;\n"
-	"	gl_Position = in_position;\n"
+	"	gl_Position = mvp * in_position;\n"
 	"};\n";
 
 	static std::string SPARKY_DEFAULT_FRAG_SHADER = "#version 460 core\n"

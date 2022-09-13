@@ -9,3 +9,6 @@
 
 // Renderer
 #include "renderer/quad_renderer.h"
+
+// Camera
+#include "camera/ortho_cam.h"
