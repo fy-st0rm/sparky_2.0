@@ -48,6 +48,7 @@ namespace Sparky {
 	
 	public:
 		void load_shader_from_string(const std::string& vert_shader, const std::string& frag_shader);
+		void load_shader_from_file(const std::string& vert_shader_file, const std::string& frag_shader_file);
 	
 		void bind();
 		void unbind();

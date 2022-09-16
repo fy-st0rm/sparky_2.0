@@ -26,6 +26,8 @@ namespace Sparky {
 	public:
 		// Getters and setters
 		std::shared_ptr<Shader> get_shader() const { return this->shader; }
+		void set_shader_from_file(const std::string& vert_shader_file, const std::string& frag_shader_file);
+		void set_shader_from_string(const std::string& vert_shader, const std::string& frag_shader);
 	
 	private:
 		void generate_default_texture();

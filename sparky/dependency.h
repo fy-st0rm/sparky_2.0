@@ -8,6 +8,8 @@
 #include <string>
 #include <unordered_map>
 #include <chrono>
+#include <sstream>
+#include <fstream>
 
 // Third party
 #include "vendor/glm/glm.hpp"

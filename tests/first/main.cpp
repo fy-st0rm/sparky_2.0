@@ -65,6 +65,14 @@ public:
 				case SDLK_e:
 					this->camera->set_rotation(rotation + speed);
 					break;
+
+				// Shader switch
+				case SDLK_r:
+					this->renderer->set_shader_from_file("vert.vs", "frag.fs");
+					break;
+				case SDLK_t:
+					this->renderer->set_shader_from_string(Sparky::SPARKY_DEFAULT_VERT_SHADER, Sparky::SPARKY_DEFAULT_FRAG_SHADER);
+					break;
 			}
 		}
 	}

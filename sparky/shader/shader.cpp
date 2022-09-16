@@ -22,6 +22,9 @@ namespace Sparky {
 	
 	void Shader::load_shader_from_string(const std::string& vert_shader, const std::string& frag_shader)
 	{
+		if (this->shader_id) 
+			GLCall(glDeleteProgram(this->shader_id));
+
 		this->shader_id = glCreateProgram();
 	
 		// Compiling vertex and fragment shader
@@ -36,6 +39,28 @@ namespace Sparky {
 	
 		GLCall(glDeleteShader(vs));
 		GLCall(glDeleteShader(fs));
+	}
+
+	void Shader::load_shader_from_file(const std::string& vert_shader_file, const std::string& frag_shader_file)
+	{
+		std::stringstream vert_str_stream, frag_str_stream;
+		std::string       vert_shader, frag_shader;
+		std::string line;
+
+		// Reading vertex shader
+		std::ifstream vert_stream(vert_shader_file);
+		while (std::getline(vert_stream, line))
+			vert_str_stream << line << "\n";
+
+		// Reading fragment shader
+		std::ifstream frag_stream(frag_shader_file);
+		while (std::getline(frag_stream, line))
+			frag_str_stream << line << "\n";
+
+		vert_shader = vert_str_stream.str();
+		frag_shader = frag_str_stream.str();
+
+		load_shader_from_string(vert_shader, frag_shader);
 	}
 	
 	unsigned int Shader::compile_shader(unsigned int type, const std::string& shader)

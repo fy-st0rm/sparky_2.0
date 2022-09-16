@@ -60,7 +60,23 @@ namespace Sparky {
 	
 		// Providing samplers to the shader
 		int loc = this->shader->get_uniform_location("textures");
-		GLCall(glUniform1iv(loc, 32, samplers));
+
+		//TODO: GLCall is not used here
+		glUniform1iv(loc, 32, samplers);
+	}
+
+	void QuadRenderer::set_shader_from_file(const std::string& vert_shader_file, const std::string& frag_shader_file)
+	{
+		this->shader->load_shader_from_file(vert_shader_file, frag_shader_file);
+		this->shader->bind();
+		this->provide_texture_samplers();
+	}
+
+	void QuadRenderer::set_shader_from_string(const std::string& vert_shader, const std::string& frag_shader)
+	{
+		this->shader->load_shader_from_string(vert_shader, frag_shader);
+		this->shader->bind();
+		this->provide_texture_samplers();
 	}
 	
 	void QuadRenderer::render_begin()
