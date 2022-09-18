@@ -3,6 +3,8 @@
 namespace Sparky {
 	Shader::Shader()
 	{
+		this->load_shader_from_string(SPARKY_DEFAULT_VERT_SHADER, SPARKY_DEFAULT_FRAG_SHADER);
+		this->bind();
 	}
 	
 	Shader::~Shader()

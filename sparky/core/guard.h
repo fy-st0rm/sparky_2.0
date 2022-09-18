@@ -3,9 +3,9 @@
 
 // Macros to handle opengl errors
 #define SP_ASSERT(x) if (!(x)) exit(1);
-#define GLCall(x) SPGuard::clear_error(); \
+#define GLCall(x) Sparky::SPGuard::clear_error(); \
 x;\
-SP_ASSERT(SPGuard::error_log(#x, __FILE__, __LINE__))
+SP_ASSERT(Sparky::SPGuard::error_log(#x, __FILE__, __LINE__))
 
 namespace Sparky {
 	// Class for error handling

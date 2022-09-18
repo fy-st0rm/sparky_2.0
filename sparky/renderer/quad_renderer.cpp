@@ -1,8 +1,8 @@
 #include "quad_renderer.h"
 
 namespace Sparky {
-	QuadRenderer::QuadRenderer(int max_quad_cnt)
-		:max_quad_cnt(max_quad_cnt), max_idx_cnt(max_quad_cnt * 6), max_buff_size(max_quad_cnt * sizeof(Vertex) * 4)
+	QuadRenderer::QuadRenderer(int max_quad_cnt, std::shared_ptr<Shader> shader)
+		:max_quad_cnt(max_quad_cnt), max_idx_cnt(max_quad_cnt * 6), max_buff_size(max_quad_cnt * sizeof(Vertex) * 4), shader(shader)
 	{
 		// Resizing the buffer to its max capacity
 		this->buffer = (float*) malloc(this->max_buff_size);
@@ -11,11 +11,6 @@ namespace Sparky {
 		this->vert_array = std::make_shared<VertexArray>();
 		this->vert_buff  = std::make_shared<VertexBuffer>(this->max_buff_size, nullptr, GL_DYNAMIC_DRAW);
 		this->idx_buff   = std::make_shared<IndexBuffer>(this->max_idx_cnt);
-	
-		// Constructing shader
-		this->shader = std::make_shared<Shader>();
-		this->shader->load_shader_from_string(SPARKY_DEFAULT_VERT_SHADER, SPARKY_DEFAULT_FRAG_SHADER);
-		this->shader->bind();
 	
 		// Vertex layouts
 		this->vert_array->push_layout<float>(3, sizeof(Vertex));
@@ -29,7 +24,6 @@ namespace Sparky {
 		// Generating default texture
 		this->generate_default_texture();
 		this->provide_texture_samplers();
-	
 	}
 	
 	QuadRenderer::~QuadRenderer()
@@ -64,20 +58,6 @@ namespace Sparky {
 		//TODO: GLCall is not used here
 		glUniform1iv(loc, 32, samplers);
 	}
-
-	void QuadRenderer::set_shader_from_file(const std::string& vert_shader_file, const std::string& frag_shader_file)
-	{
-		this->shader->load_shader_from_file(vert_shader_file, frag_shader_file);
-		this->shader->bind();
-		this->provide_texture_samplers();
-	}
-
-	void QuadRenderer::set_shader_from_string(const std::string& vert_shader, const std::string& frag_shader)
-	{
-		this->shader->load_shader_from_string(vert_shader, frag_shader);
-		this->shader->bind();
-		this->provide_texture_samplers();
-	}
 	
 	void QuadRenderer::render_begin()
 	{
@@ -95,7 +75,6 @@ namespace Sparky {
 		this->vert_buff->push_data(0, this->max_buff_size, this->buffer);
 	
 		// Drawcall
-		this->shader->bind();
 		this->vert_array->bind();
 		GLCall(glDrawElements(GL_TRIANGLES, this->buff_idx, GL_UNSIGNED_INT, NULL));
 	}
