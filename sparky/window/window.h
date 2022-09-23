@@ -7,12 +7,14 @@ namespace Sparky {
 	class Window
 	{
 	public:
-		Window(const std::string& title, int width, int height);
+		Window(const std::string& title, int width, int height, int flag);
 		~Window();
 	
 	public:
 		void clear(glm::vec4 color);
 		void update();
+		void auto_resize_viewport();
+		void resize_viewport(int width, int height);
 	
 	public:
 		// Setters
@@ -31,6 +33,7 @@ namespace Sparky {
 		int width, height;
 		std::string title;
 		bool closed;
+		int flag;
 	
 	private:
 		SDL_Window*   window;

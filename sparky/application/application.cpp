@@ -1,10 +1,10 @@
 #include "application.h"
 
 namespace Sparky {
-	void Application::run(const std::string& title, int width, int height, float fps)
+	void Application::run(const std::string& title, int width, int height, float fps, int flag)
 	{
 		this->fps = fps;
-		this->window = std::make_shared<Window>(title, width, height);
+		this->window = std::make_shared<Window>(title, width, height, flag);
 	
 		// Calling application startup
 		on_start();
@@ -38,6 +38,14 @@ namespace Sparky {
 		while (SDL_PollEvent(&this->event))
 		{
 			if (this->event.type == SDL_QUIT) this->destroy();
+			else if (this->event.type == SDL_WINDOWEVENT)
+			{
+				switch (event.window.event)
+				{
+					case SDL_WINDOWEVENT_RESIZED:
+						this->window->auto_resize_viewport();
+				}
+			}
 	
 			// Passing event to the current scene
 			this->scenes[this->curr_scene]->on_event(this->event);

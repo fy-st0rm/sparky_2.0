@@ -8,7 +8,7 @@
 #include "shader/shader.h"
 
 // Renderer
-#include "renderer/quad_renderer.h"
+#include "renderer/quad_renderer/quad_renderer.h"
 
 // Camera
 #include "camera/ortho_cam.h"

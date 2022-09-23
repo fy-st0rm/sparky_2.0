@@ -93,6 +93,7 @@ namespace Sparky {
 			this->texture_slots.push_back(texture.get_texture_id());
 			id = texture.get_texture_id();
 		}
+
 	
 		Quad quad;
 	

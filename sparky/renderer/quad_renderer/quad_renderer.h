@@ -1,9 +1,8 @@
 #pragma once
-#include "../buffers/buffers.h"
-#include "../shader/shader.h"
-#include "../texture/texture.h"
-#include "vertex.h"
-
+#include "../../buffers/buffers.h"
+#include "../../shader/shader.h"
+#include "../../texture/texture.h"
+#include "../vertex.h"
 
 namespace Sparky {
 	class QuadRenderer

@@ -121,5 +121,5 @@ public:
 int main()
 {
 	Test test;
-	test.run("Sparky application", 800, 600, 60.0f);
+	test.run("Sparky application", 800, 600, 60.0f, SparkyWindowResizable);
 }

@@ -41,7 +41,7 @@ cmp_texture:
 	$(CC) $(INC) -c texture/*.cpp
 
 cmp_renderer:
-	$(CC) $(INC) -c renderer/*.cpp
+	$(CC) $(INC) -c renderer/quad_renderer/*.cpp
 
 cmp_app:
 	$(CC) $(INC) -c application/*.cpp

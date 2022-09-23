@@ -4,7 +4,6 @@
 #include "scene.h"
 #include "../window/window.h"
 
-
 namespace Sparky {
 	class Application
 	{
@@ -13,7 +12,7 @@ namespace Sparky {
 		virtual void on_start() {};
 	
 		// Entry point
-		void run(const std::string& title, int width, int height, float fps);
+		void run(const std::string& title, int width, int height, float fps, int flag);
 		void destroy();
 	
 		// Function to add new scenes
