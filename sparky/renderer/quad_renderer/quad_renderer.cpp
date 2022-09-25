@@ -1,8 +1,8 @@
 #include "quad_renderer.h"
 
 namespace Sparky {
-	QuadRenderer::QuadRenderer(int max_quad_cnt, std::shared_ptr<Shader> shader)
-		:max_quad_cnt(max_quad_cnt), max_idx_cnt(max_quad_cnt * 6), max_buff_size(max_quad_cnt * sizeof(Vertex) * 4), shader(shader)
+	QuadRenderer::QuadRenderer(int max_quad_cnt, std::shared_ptr<OrthoCamera> camera)
+		:max_quad_cnt(max_quad_cnt), max_idx_cnt(max_quad_cnt * 6), max_buff_size(max_quad_cnt * sizeof(Vertex) * 4), camera(camera)
 	{
 		// Resizing the buffer to its max capacity
 		this->buffer = (float*) malloc(this->max_buff_size);
@@ -20,8 +20,9 @@ namespace Sparky {
 	
 		// Generating index buffer
 		this->idx_buff->generate_quad_indices();
-	
-		// Generating default texture
+
+		// Generating default shader
+		this->shader = std::make_shared<Shader>();
 		this->generate_default_texture();
 		this->provide_texture_samplers();
 	}
@@ -58,6 +59,20 @@ namespace Sparky {
 		//TODO: GLCall is not used here
 		glUniform1iv(loc, 32, samplers);
 	}
+
+	void QuadRenderer::switch_shader_from_string(const std::string& vert_shader, const std::string& frag_shader)
+	{
+		this->shader->load_shader_from_string(vert_shader, frag_shader);
+		this->shader->bind();
+		this->provide_texture_samplers();
+	}
+
+	void QuadRenderer::switch_shader_from_file(const std::string& vert_shader_file, const std::string& frag_shader_file)
+	{
+		this->shader->load_shader_from_file(vert_shader_file, frag_shader_file);
+		this->shader->bind();
+		this->provide_texture_samplers();
+	}
 	
 	void QuadRenderer::render_begin()
 	{
@@ -67,8 +82,12 @@ namespace Sparky {
 	
 	void QuadRenderer::render_end()
 	{
-		// Binding all the textures
+		// Binding shader and texture
+		this->shader->bind();
 		this->bind_all_textures();
+
+		// Updating the camera
+		this->camera->update(this->shader.get());
 	
 		// Pushing the vertex data into the vertex buffer
 		this->vert_buff->bind();
@@ -94,7 +113,6 @@ namespace Sparky {
 			id = texture.get_texture_id();
 		}
 
-	
 		Quad quad;
 	
 		// Quad position

@@ -89,6 +89,8 @@ public:
 	void on_update(double dt)
 	{
 		this->shader->bind();
+		this->renderer1->provide_texture_samplers();
+		this->renderer2->provide_texture_samplers();
 
 		Sparky::Quad quad1 = this->renderer1->create_quad(glm::vec3(100.0f, 100.0f, 0.0f), glm::vec2(200, 200), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), *texture);
 		Sparky::Quad quad2 = this->renderer2->create_quad(glm::vec3(300.0f, 100.0f, 0.0f), glm::vec2(50, 50), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), white);
