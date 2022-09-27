@@ -14,7 +14,6 @@ private:
 	Sparky::Texture white;
 
 	// Renderer
-	std::shared_ptr<Sparky::Shader> shader;
 	std::shared_ptr<Sparky::QuadRenderer> renderer1;
 	std::shared_ptr<Sparky::QuadRenderer> renderer2;
 
@@ -27,13 +26,12 @@ public:
 	{
 		app = ((ArgStruct*)arg_struct)->app;
 
-		this->shader = std::make_shared<Sparky::Shader>();
-		this->renderer1 = std::make_shared<Sparky::QuadRenderer>(1000, this->shader);
-		this->renderer2 = std::make_shared<Sparky::QuadRenderer>(1000, this->shader);
-		this->texture = std::make_shared<Sparky::Texture>("Us.png");
-
 		glm::vec3 pos = { 0.0f, 0.0f, 0.0f };
 		this->camera = std::make_shared<Sparky::OrthoCamera>(pos, 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
+
+		this->renderer1 = std::make_shared<Sparky::QuadRenderer>(1000, this->camera);
+		this->renderer2 = std::make_shared<Sparky::QuadRenderer>(1000, this->camera);
+		this->texture = std::make_shared<Sparky::Texture>("Us.png");
 		std::cout << "Home scene constructed.\n";
 	};
 
@@ -71,16 +69,10 @@ public:
 
 				// Shader switch
 				case SDLK_r:
-					this->shader->load_shader_from_file("vert.vs", "frag.fs");
-					this->shader->bind();
-					this->renderer1->provide_texture_samplers();
-					this->renderer2->provide_texture_samplers();
+					this->renderer2->switch_shader_from_file("vert.vs", "frag.fs");
 					break;
 				case SDLK_t:
-					this->shader->load_shader_from_string(Sparky::SPARKY_DEFAULT_VERT_SHADER, Sparky::SPARKY_DEFAULT_FRAG_SHADER);
-					this->shader->bind();
-					this->renderer1->provide_texture_samplers();
-					this->renderer2->provide_texture_samplers();
+					this->renderer2->switch_shader_from_string(Sparky::SPARKY_DEFAULT_VERT_SHADER, Sparky::SPARKY_DEFAULT_FRAG_SHADER);
 					break;
 			}
 		}
@@ -88,10 +80,6 @@ public:
 
 	void on_update(double dt)
 	{
-		this->shader->bind();
-		this->renderer1->provide_texture_samplers();
-		this->renderer2->provide_texture_samplers();
-
 		Sparky::Quad quad1 = this->renderer1->create_quad(glm::vec3(100.0f, 100.0f, 0.0f), glm::vec2(200, 200), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), *texture);
 		Sparky::Quad quad2 = this->renderer2->create_quad(glm::vec3(300.0f, 100.0f, 0.0f), glm::vec2(50, 50), glm::vec4(1.0f, 0.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), white);
 
@@ -102,8 +90,6 @@ public:
 		this->renderer2->render_begin();
 		this->renderer2->push_quad(quad2);
 		this->renderer2->render_end();
-
-		this->camera->update(renderer1->get_shader().get());
 	}
 };
 
@@ -123,5 +109,5 @@ public:
 int main()
 {
 	Test test;
-	test.run("Sparky application", 800, 600, 60.0f, SparkyWindowResizable);
+	test.run("Sparky application", 800, 600, 60.0f, 0);
 }
