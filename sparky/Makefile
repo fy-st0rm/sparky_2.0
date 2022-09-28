@@ -1,26 +1,34 @@
 CC  = g++
 OUT = libsparky.a
-INC = -I.
-
+INC = -I. -Ivendor/GLEW/include -Ivendor/SDL2_64bit/include
 
 cmp:
-	$(MAKE) --no-print-directory cmp_core
-	$(MAKE) --no-print-directory cmp_window
-	$(MAKE) --no-print-directory cmp_buffers
-	$(MAKE) --no-print-directory cmp_shader
-	$(MAKE) --no-print-directory cmp_camera
-	$(MAKE) --no-print-directory cmp_texture
-	$(MAKE) --no-print-directory cmp_renderer
-	$(MAKE) --no-print-directory cmp_app
-	$(MAKE) --no-print-directory build
-	$(MAKE) --no-print-directory clean
+	$(MAKE)  cmp_core
+	$(MAKE)  cmp_window
+	$(MAKE)  cmp_buffers
+	$(MAKE)  cmp_shader
+	$(MAKE)  cmp_camera
+	$(MAKE)  cmp_texture
+	$(MAKE)  cmp_renderer
+	$(MAKE)  cmp_app
+	$(MAKE)  build
+	$(MAKE)  clean
+
+reset:
+	erase ..\bin\*.a 
+	erase ..\bin\*.la 
 
 build:
 	ar rcf $(OUT) *.o
-	mv $(OUT) ../bin/
-
+	copy $(OUT) ..\bin
+	copy vendor\GLEW\lib\* ..\bin
+	copy vendor\SDL2_64bit\lib\* ..\bin
+	copy vendor\GLEW\bin\*.dll ..\bin
+	copy vendor\SDL2_64bit\bin\*.dll ..\bin
+	
 clean:
-	rm *.o
+	erase *.o
+	erase $(OUT)
 
 cmp_core:
 	$(CC) $(INC) -c core/*.cpp

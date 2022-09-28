@@ -106,8 +106,9 @@ public:
 	}
 };
 
-int main()
+int main(int argc, char** argv)
 {
 	Test test;
 	test.run("Sparky application", 800, 600, 60.0f, 0);
+	return 0;
 }
