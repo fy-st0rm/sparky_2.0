@@ -17,7 +17,7 @@ namespace Sparky {
 		void render_begin();
 		void render_end();
 	
-		Quad create_quad(glm::vec3 pos, glm::vec2 size, glm::vec4 color, glm::vec4 tex_cord, const Texture& texture);
+		Quad create_quad(glm::vec3 pos, glm::vec2 size, glm::vec4 color, glm::vec4 tex_cord, Texture* texture);
 		void push_quad(const Quad& quad);
 		void print_buffer();
 
@@ -43,6 +43,7 @@ namespace Sparky {
 		float* buffer;
 	
 		// Texture buffer
+		unsigned int white_texture;
 		std::vector<float> texture_slots;
 	
 	private:

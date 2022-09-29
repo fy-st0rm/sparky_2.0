@@ -9,7 +9,7 @@ namespace Sparky {
 	{
 	public:
 		Texture(const std::string& file_path);
-		Texture() : texture_id(0) {}
+		Texture(): texture_id(SparkyWhiteTextureID) {};
 		~Texture();
 	
 	public:
