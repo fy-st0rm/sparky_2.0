@@ -1,0 +1,59 @@
+CC  = g++
+OUT = libsparky.a
+INC = -I. -Ivendor/GLEW/include -Ivendor/SDL2_64bit/include
+
+win:
+	echo "[COMPILING]: Sparky2.0 for Windows."
+	$(MAKE) --no-print-directory win_cmp_core
+	$(MAKE) --no-print-directory win_cmp_window
+	$(MAKE) --no-print-directory win_cmp_buffers
+	$(MAKE) --no-print-directory win_cmp_shader
+	$(MAKE) --no-print-directory win_cmp_camera
+	$(MAKE) --no-print-directory win_cmp_texture
+	$(MAKE) --no-print-directory win_cmp_renderer
+	$(MAKE) --no-print-directory win_cmp_app
+	$(MAKE) --no-print-directory win_build
+	$(MAKE) --no-print-directory win_clean
+	echo "[SUCESS]: Library of Sparky2.0 are found in `bin` folder"
+
+win_reset:
+	erase ..\bin\*.a 
+	erase ..\bin\*.la 
+	erase ..\bin\*.dll 
+
+win_build:
+	ar rcf $(OUT) *.o
+	copy $(OUT) ..\bin
+	copy vendor\GLEW\lib\* ..\bin
+	copy vendor\SDL2_64bit\lib\* ..\bin
+	copy vendor\GLEW\bin\*.dll ..\bin
+	copy vendor\SDL2_64bit\bin\*.dll ..\bin
+	
+win_clean:
+	erase *.o
+	erase $(OUT)
+
+win_cmp_core:
+	$(CC) $(INC) -c core/*.cpp
+
+win_cmp_window:
+	$(CC) $(INC) -c window/*.cpp
+
+win_cmp_buffers:
+	$(CC) $(INC) -c buffers/*.cpp
+
+win_cmp_shader:
+	$(CC) $(INC) -c shader/*.cpp
+
+win_cmp_camera:
+	$(CC) $(INC) -c camera/*.cpp
+
+win_cmp_texture:
+	$(CC) $(INC) -c texture/*.cpp
+
+win_cmp_renderer:
+	$(CC) $(INC) -c renderer/quad_renderer/*.cpp
+
+win_cmp_app:
+	$(CC) $(INC) -c application/*.cpp
+
