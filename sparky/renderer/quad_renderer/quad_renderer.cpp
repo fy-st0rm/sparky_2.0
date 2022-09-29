@@ -2,7 +2,7 @@
 
 namespace Sparky {
 	QuadRenderer::QuadRenderer(int max_quad_cnt, std::shared_ptr<OrthoCamera> camera)
-		:max_quad_cnt(max_quad_cnt), max_idx_cnt(max_quad_cnt * 6), max_buff_size(max_quad_cnt * sizeof(Vertex) * 4), camera(camera)
+		:max_quad_cnt(max_quad_cnt), max_idx_cnt(max_quad_cnt * 6), max_buff_size(max_quad_cnt * sizeof(Vertex) * 4), camera(camera), white_texture(0)
 	{
 		// Resizing the buffer to its max capacity
 		this->buffer = (float*) malloc(this->max_buff_size);
@@ -34,16 +34,24 @@ namespace Sparky {
 	
 	void QuadRenderer::generate_default_texture()
 	{
+		// Generating a white texture
+		GLCall(glGenTextures(1, &this->white_texture));
+		GLCall(glBindTexture(GL_TEXTURE_2D, this->white_texture));
+
 		unsigned int white = 0xffffffff;
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &white));
-		this->texture_slots.push_back(0); // 0 = white texture slot
+
+		this->texture_slots.push_back(this->white_texture);
 	}
 	
 	void QuadRenderer::bind_all_textures()
 	{
+		// Binding the texture units according to their texture id
+		// slot = [0, , 2, 3, , 4] => Binds according to their id rather then linearly to prevent missmatch of the index in shader
 		for (int i = 0; i < this->texture_slots.size(); i++)
 		{
-			GLCall(glBindTextureUnit(i, this->texture_slots[i]));
+			unsigned int id = this->texture_slots[i];
+			GLCall(glBindTextureUnit(id, id));
 		}
 	}
 	
@@ -55,9 +63,7 @@ namespace Sparky {
 	
 		// Providing samplers to the shader
 		int loc = this->shader->get_uniform_location("textures");
-
-		//TODO: GLCall is not used here
-		glUniform1iv(loc, 32, samplers);
+		GLCall(glUniform1iv(loc, 32, samplers));
 	}
 
 	void QuadRenderer::switch_shader_from_string(const std::string& vert_shader, const std::string& frag_shader)
@@ -76,6 +82,7 @@ namespace Sparky {
 	
 	void QuadRenderer::render_begin()
 	{
+		// Clearning the buffer
 		this->buff_idx = 0;
 		memset(this->buffer, 0, this->max_buff_size);
 	}
@@ -98,19 +105,23 @@ namespace Sparky {
 		GLCall(glDrawElements(GL_TRIANGLES, this->buff_idx, GL_UNSIGNED_INT, NULL));
 	}
 	
-	Quad QuadRenderer::create_quad(glm::vec3 pos, glm::vec2 size, glm::vec4 color,glm::vec4 tex_cord, const Texture& texture)
+	Quad QuadRenderer::create_quad(glm::vec3 pos, glm::vec2 size, glm::vec4 color,glm::vec4 tex_cord, Texture* texture)
 	{
 		// Adding texture to the slots if it is new
 		int id = -1;
 		for (auto& i : this->texture_slots)
 		{
-			if (i == texture.get_texture_id())
+			if (i == texture->get_texture_id())
 				id = i;
 		}
-		if (id == -1)
+		if (texture->get_texture_id() == SparkyWhiteTextureID)
 		{
-			this->texture_slots.push_back(texture.get_texture_id());
-			id = texture.get_texture_id();
+			id = this->white_texture;
+		}
+		else if (id == -1)
+		{
+			this->texture_slots.push_back(texture->get_texture_id());
+			id = texture->get_texture_id();
 		}
 
 		Quad quad;

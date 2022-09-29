@@ -7,5 +7,6 @@ LIB = -lsparky -lmingw32 -lopengl32 -lUser32 -lGdi32 -lShell32 -lglew32 -lSDL2ma
 all:
 	g++ $(INC) -c $(CPP)
 	g++ -o main $(OBJ) $(LIBP) $(LIB)
+	erase *.o
 	main.exe
 

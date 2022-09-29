@@ -3,20 +3,21 @@ OUT = libsparky.a
 INC = -I. -Ivendor/GLEW/include -Ivendor/SDL2_64bit/include
 
 cmp:
-	$(MAKE)  cmp_core
-	$(MAKE)  cmp_window
-	$(MAKE)  cmp_buffers
-	$(MAKE)  cmp_shader
-	$(MAKE)  cmp_camera
-	$(MAKE)  cmp_texture
-	$(MAKE)  cmp_renderer
-	$(MAKE)  cmp_app
-	$(MAKE)  build
-	$(MAKE)  clean
+	$(MAKE) --no-print-directory cmp_core
+	$(MAKE) --no-print-directory cmp_window
+	$(MAKE) --no-print-directory cmp_buffers
+	$(MAKE) --no-print-directory cmp_shader
+	$(MAKE) --no-print-directory cmp_camera
+	$(MAKE) --no-print-directory cmp_texture
+	$(MAKE) --no-print-directory cmp_renderer
+	$(MAKE) --no-print-directory cmp_app
+	$(MAKE) --no-print-directory build
+	$(MAKE) --no-print-directory clean
 
 reset:
 	erase ..\bin\*.a 
 	erase ..\bin\*.la 
+	erase ..\bin\*.dll 
 
 build:
 	ar rcf $(OUT) *.o
