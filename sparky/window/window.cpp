@@ -19,6 +19,7 @@ namespace Sparky {
 	{
 		SPGuard::sdl_check(SDL_Init(SDL_INIT_EVERYTHING));
 		SPGuard::sdl_check(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG));
+		SPGuard::sdl_check(TTF_Init());
 	
 		// Setting some attributes
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);

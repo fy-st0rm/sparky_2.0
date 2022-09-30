@@ -19,3 +19,4 @@
 #include <vendor/GLEW/include/GL/glew.h>
 #include <vendor/SDL2_64bit/include/SDL2/SDL.h>
 #include <vendor/SDL2_64bit/include/SDL2/SDL_image.h>
+#include <vendor/SDL2_64bit/include/SDL2/SDL_ttf.h>

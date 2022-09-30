@@ -30,6 +30,7 @@ namespace Sparky {
 	QuadRenderer::~QuadRenderer()
 	{
 		delete this->buffer;
+		GLCall(glDeleteTextures(1, &this->white_texture));
 	}
 	
 	void QuadRenderer::generate_default_texture()

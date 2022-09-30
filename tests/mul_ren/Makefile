@@ -2,7 +2,7 @@ INC = -I../../sparky
 CPP = *.cpp
 OBJ = *.o
 LIBP = -L../../bin/
-LIB = -lsparky -lmingw32 -lopengl32 -lUser32 -lGdi32 -lShell32 -lglew32 -lSDL2main -lSDL2 -lSDL2_image
+LIB = -lsparky -lmingw32 -lopengl32 -lUser32 -lGdi32 -lShell32 -lglew32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 
 all:
 	g++ $(INC) -c $(CPP)
