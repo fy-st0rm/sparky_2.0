@@ -1,7 +1,7 @@
 #include "ortho_cam.h"
 
 namespace Sparky {
-	OrthoCamera::OrthoCamera(glm::vec3& pos, float left, float right, float bottom, float top, float near, float far)
+	OrthoCamera::OrthoCamera(glm::vec3 pos, float left, float right, float bottom, float top, float near, float far)
 		:pos(pos)
 	{
 		this->set_projection(left, right, bottom, top, near, far);

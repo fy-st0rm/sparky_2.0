@@ -5,6 +5,8 @@ INC = -I. -Ivendor/GLEW/include -Ivendor/SDL2_64bit/include
 win:
 	echo "[COMPILING]: Sparky2.0 for Windows."
 	$(MAKE) --no-print-directory win_cmp_core
+	$(MAKE) --no-print-directory win_cmp_entity
+	$(MAKE) --no-print-directory win_cmp_component
 	$(MAKE) --no-print-directory win_cmp_window
 	$(MAKE) --no-print-directory win_cmp_buffers
 	$(MAKE) --no-print-directory win_cmp_shader
@@ -35,6 +37,12 @@ win_clean:
 
 win_cmp_core:
 	$(CC) $(INC) -c core/*.cpp
+
+win_cmp_entity:
+	$(CC) $(INC) -c entity/*.cpp
+
+win_cmp_component:
+	$(CC) $(INC) -c entity/component/*.cpp
 
 win_cmp_window:
 	$(CC) $(INC) -c window/*.cpp

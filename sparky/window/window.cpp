@@ -30,7 +30,7 @@ namespace Sparky {
 		this->window   = (SDL_Window*)   SPGuard::sdl_check_ptr(SDL_CreateWindow(this->title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, this->width, this->height, SDL_WINDOW_OPENGL | this->flag));
 		this->renderer = (SDL_Renderer*) SPGuard::sdl_check_ptr(SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED));
 	
-		SPGuard::sdl_check_ptr(SDL_GL_CreateContext(this->window));
+		this->gl_context = (SDL_GLContext) SPGuard::sdl_check_ptr(SDL_GL_CreateContext(this->window));
 	
 		if (glewInit() != GLEW_OK)
 			Log::error("[Error]: Failed to initialize glew", SPARKY_NULL);

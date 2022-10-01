@@ -36,6 +36,8 @@ namespace Sparky {
 		// Getters
 		inline int get_win_width()  const { return window->get_width();  }
 		inline int get_win_height() const { return window->get_height(); }
+
+		Window* get_sparky_window() const { return this->window.get(); }
 	
 	private:
 		// Window

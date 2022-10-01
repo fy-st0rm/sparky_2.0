@@ -13,3 +13,7 @@
 
 // Camera
 #include "camera/ortho_cam.h"
+
+// Entity
+#include "entity/entity.h"
+#include "entity/entity_manager.h"

@@ -25,6 +25,9 @@ namespace Sparky {
 		inline int get_height() const { return this->height; }
 	
 		inline bool is_closed() const { return this->closed; }
+
+		SDL_Window* get_sdl_window() const { return this->window; }
+		SDL_GLContext get_gl_context() const { return this->gl_context; }
 	
 	private:
 		void init_sdl();
@@ -38,5 +41,6 @@ namespace Sparky {
 	private:
 		SDL_Window*   window;
 		SDL_Renderer* renderer;
+		SDL_GLContext gl_context;
 	};
 }

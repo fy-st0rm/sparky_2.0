@@ -6,7 +6,7 @@ namespace Sparky {
 	class OrthoCamera
 	{
 	public:
-		OrthoCamera(glm::vec3& pos, float left, float right, float bottom, float top, float near, float far);
+		OrthoCamera(glm::vec3 pos, float left, float right, float bottom, float top, float near, float far);
 		~OrthoCamera();
 	
 	public:

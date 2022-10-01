@@ -10,6 +10,7 @@
 #include <chrono>
 #include <sstream>
 #include <fstream>
+#include <algorithm>
 
 // Third party
 #include "vendor/glm/glm.hpp"

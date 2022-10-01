@@ -2,6 +2,7 @@
 
 #include "log.h"
 #include "guard.h"
+#include "uuid.h"
 
 // Important definations
 #define SparkyEvent SDL_Event
