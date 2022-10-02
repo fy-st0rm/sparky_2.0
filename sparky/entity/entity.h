@@ -21,7 +21,7 @@ namespace Sparky {
 			this->components[component->name] = component;
 
 			// Assigning the entity to its component in the entity manager
-			this->manager->add_entity_to_comp<T>(this); 
+			this->manager->add_entity_to_comp<T>(this->self); 
 		}
 
 		template<typename T>
@@ -51,7 +51,7 @@ namespace Sparky {
 				this->components.erase(comp.name);
 
 				// Removing the entity from the component list in entity manager
-				this->manager->remove_entity_from_comp<T>(this);
+				this->manager->remove_entity_from_comp<T>(this->self);
 			}
 			else
 			{
@@ -65,6 +65,7 @@ namespace Sparky {
 
 	private:
 		std::string id;
+		std::shared_ptr<Entity> self;
 		std::shared_ptr<EntityManager> manager;
 		std::unordered_map<std::string, std::shared_ptr<Component>> components;
 	};

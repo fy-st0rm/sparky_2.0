@@ -1,6 +1,7 @@
 #pragma once
 #include "dependency.h"
 #include "component/component.h"
+#include "../renderer/quad_renderer/quad_renderer.h"
 
 namespace Sparky {
 	class Entity;
@@ -12,11 +13,11 @@ namespace Sparky {
 		~EntityManager() {};
 	
 	public:
-		void push_entity(Entity* entity);
-		void remove_entity(Entity* entity);
+		void push_entity(std::shared_ptr<Entity> entity);
+		void remove_entity(std::shared_ptr<Entity> entity);
 
 		template<typename T>
-		void add_entity_to_comp(Entity* entity)
+		void add_entity_to_comp(std::shared_ptr<Entity> entity)
 		{
 			if (typeid(T) == typeid(TransformComponent))
 			{
@@ -30,7 +31,7 @@ namespace Sparky {
 		}
 
 		template<typename T>
-		void remove_entity_from_comp(Entity* entity)
+		void remove_entity_from_comp(std::shared_ptr<Entity> entity)
 		{
 			if (typeid(T) == typeid(TransformComponent))
 			{
@@ -50,10 +51,11 @@ namespace Sparky {
 		}
 	
 	public:
+		void update(std::shared_ptr<QuadRenderer> renderer);
 		void print_buffer();
 	
 	private:
-		std::unordered_map<std::string, Entity*> entity_buffer;
+		std::unordered_map<std::string, std::shared_ptr<Entity>> entity_buffer;
 		std::vector<std::string> transform_entity;
 		std::vector<std::string> render_entity;
 	};
