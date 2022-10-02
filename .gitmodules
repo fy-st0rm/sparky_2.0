@@ -1,4 +1,4 @@
 [submodule "sparky/vendor/imgui"]
 	path = sparky/vendor/imgui
-	url = https://github.com/ocornut/imgui/tree/docking
+	url = https://github.com/ocornut/imgui.git
 	branch = docking
