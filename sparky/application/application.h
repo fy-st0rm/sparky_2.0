@@ -3,6 +3,7 @@
 #include "../core/core.h"
 #include "scene.h"
 #include "../window/window.h"
+#include "../gui/gui.h"
 
 // TODO: Add opencv support for textures -lopencv_core "-lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui -lprotobuf -lopencv_videoio"
 // TODO: Text rendering
@@ -38,6 +39,8 @@ namespace Sparky {
 		inline int get_win_height() const { return window->get_height(); }
 
 		std::shared_ptr<Window> get_sparky_window() const { return this->window; }
+
+		void set_mode(int mode) { this->mode = mode; }
 	
 	private:
 		// Window
@@ -48,6 +51,9 @@ namespace Sparky {
 		// Stores scenes
 		std::unordered_map<std::string, std::shared_ptr<Scene>> scenes;
 		std::string curr_scene;
+
+		// Mode
+		int mode = RELEASE_MODE;
 	
 		// Delta Time
 		float fps;

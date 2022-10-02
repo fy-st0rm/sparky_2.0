@@ -34,6 +34,7 @@ public:
 		// Creating renderer
 		this->renderer = std::make_shared<Sparky::QuadRenderer>(1000, this->camera);
 
+		// Initializing entity manager
 		this->manager = std::make_shared<Sparky::EntityManager>();
 
 		// Entity

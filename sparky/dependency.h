@@ -16,6 +16,11 @@
 #include "vendor/glm/glm.hpp"
 #include "vendor/glm/gtc/matrix_transform.hpp"
 
+// Imgui
+#include "vendor/imgui/imgui.h"
+#include "vendor/imgui/backends/imgui_impl_sdl.h"
+#include "vendor/imgui/backends/imgui_impl_opengl3.h"
+
 // Graphics library
 #include <vendor/GLEW/include/GL/glew.h>
 #include <vendor/SDL2_64bit/include/SDL2/SDL.h>

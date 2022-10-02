@@ -27,8 +27,7 @@ public:
 		app = ((ArgStruct*)arg_struct)->app;
 
 		// Initializing the camera
-		glm::vec3 pos = { 0.0f, 0.0f, 0.0f };
-		this->camera = std::make_shared<Sparky::OrthoCamera>(pos, 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
+		this->camera = std::make_shared<Sparky::OrthoCamera>(glm::vec3(0,0,0), 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
 
 		// Initializing the renderer
 		this->renderer = std::make_shared<Sparky::QuadRenderer>(1000, this->camera);

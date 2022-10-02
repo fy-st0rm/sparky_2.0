@@ -9,6 +9,7 @@ namespace Sparky {
 		// Virtual functions
 		virtual void on_entry() {};
 		virtual void on_update(double dt) {};
+		virtual void on_imgui_render() {};
 		virtual void on_event(SparkyEvent event) {};
 		virtual void on_exit() {};
 	};

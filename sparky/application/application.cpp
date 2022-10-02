@@ -5,6 +5,9 @@ namespace Sparky {
 	{
 		this->fps = fps;
 		this->window = std::make_shared<Window>(title, width, height, flag);
+
+		// Initializing imgui
+		Gui::init(this->window);
 	
 		// Calling application startup
 		on_start();
@@ -19,6 +22,7 @@ namespace Sparky {
 	
 	void Application::destroy()
 	{
+		Gui::shutdown();
 		this->window->destroy();
 	}
 	
@@ -37,6 +41,9 @@ namespace Sparky {
 	{
 		while (SDL_PollEvent(&this->event))
 		{
+			// Imgui event handling
+			ImGui_ImplSDL2_ProcessEvent(&this->event);
+
 			if (this->event.type == SDL_QUIT) this->destroy();
 			else if (this->event.type == SDL_WINDOWEVENT)
 			{
@@ -46,7 +53,6 @@ namespace Sparky {
 						this->window->auto_resize_viewport();
 				}
 			}
-	
 			// Passing event to the current scene
 			this->scenes[this->curr_scene]->on_event(this->event);
 		}
@@ -60,11 +66,16 @@ namespace Sparky {
 			this->clear({0.0f, 0.0f, 0.0f, 1.0f});
 			auto start_t = std::chrono::high_resolution_clock::now();
 	
-			// Calling application event loop
-			this->app_event();
-	
 			// Updating current scene
 			this->scenes[this->curr_scene]->on_update(this->dt);
+			
+			// Updating imgui render during debug mode
+			if (this->mode == DEBUG_MODE)
+			{
+				Gui::begin_frame();
+				this->scenes[this->curr_scene]->on_imgui_render();
+				Gui::end_frame();
+			}
 	
 			// Calculating delta time
 			auto end_t = std::chrono::high_resolution_clock::now();
@@ -76,6 +87,9 @@ namespace Sparky {
 	
 			// Updating window
 			this->window->update();
+	
+			// Calling application event loop
+			this->app_event();
 		}
 	}
 }
