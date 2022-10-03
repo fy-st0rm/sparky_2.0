@@ -28,7 +28,7 @@ namespace Sparky {
 
 			// Creating the quad
 			// TODO: Change texture cord according to animation component
-			Quad quad = renderer->create_quad(tcomp->get_pos(), tcomp->get_size(), rcomp->get_color(), glm::vec4(0,0,1,1), rcomp->get_texture());
+			Quad quad = renderer->create_quad(tcomp->get_pos(), tcomp->get_size(), rcomp->get_color(), rcomp->get_tex_cord(), rcomp->get_texture());
 			renderer->push_quad(quad);
 		}
 		renderer->render_end();

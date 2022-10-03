@@ -50,17 +50,19 @@ namespace Sparky {
 
 	public:
 		RenderComponent() {}
-		RenderComponent(glm::vec4 color, Texture* texture) 
-			:color(color), texture(texture)
+		RenderComponent(glm::vec4 color, glm::vec4 tex_cord, Texture* texture) 
+			:color(color), tex_cord(tex_cord), texture(texture)
 		{}
 		~RenderComponent() {}
 	
 	public:
 		glm::vec4 get_color() const   { return this->color; }
+		glm::vec4 get_tex_cord() const { return this->tex_cord; }
 		Texture*  get_texture() const { return this->texture; }
 	
 	private:
 		glm::vec4 color;
+		glm::vec4 tex_cord;
 		Texture* texture;
 	};
 }
