@@ -3,6 +3,8 @@
 #include "component/component.h"
 #include "../renderer/quad_renderer/quad_renderer.h"
 
+//TODO: Culling of the entities which are not in the screen
+
 namespace Sparky {
 	class Entity;
 
@@ -27,7 +29,11 @@ namespace Sparky {
 			{
 				this->render_entity.push_back(entity->get_id());
 			}
-			SP_ASSERT(2 == COMPONENT_AMT);
+			else if (typeid(T) == typeid(BoxColliderComponent))
+			{
+				this->box_collider_entity.push_back(entity->get_id());
+			}
+			assert((3 == COMPONENT_AMT) && "New component needs to be handled here.");
 		}
 
 		template<typename T>
@@ -47,7 +53,14 @@ namespace Sparky {
 					this->render_entity.end()
 				);
 			}
-			SP_ASSERT(2 == COMPONENT_AMT);
+			else if (typeid(T) == typeid(BoxColliderComponent))
+			{
+				this->box_collider_entity.erase(
+					std::remove(this->box_collider_entity.begin(), this->box_collider_entity.end(), entity->get_id()),
+					this->box_collider_entity.end()
+				);
+			}
+			assert((3 == COMPONENT_AMT) && "New component needs to be handled here.");
 		}
 	
 	public:
@@ -55,8 +68,13 @@ namespace Sparky {
 		void print_buffer();
 	
 	private:
+		void update_render(std::shared_ptr<QuadRenderer> renderer);
+		void update_collision(std::shared_ptr<QuadRenderer> renderer);
+	
+	private:
 		std::unordered_map<std::string, std::shared_ptr<Entity>> entity_buffer;
 		std::vector<std::string> transform_entity;
 		std::vector<std::string> render_entity;
+		std::vector<std::string> box_collider_entity;
 	};
 }

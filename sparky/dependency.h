@@ -11,6 +11,7 @@
 #include <sstream>
 #include <fstream>
 #include <algorithm>
+#include <cassert>
 
 // Third party
 #include "vendor/glm/glm.hpp"
