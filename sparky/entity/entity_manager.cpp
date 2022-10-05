@@ -35,8 +35,14 @@ namespace Sparky {
 			RenderComponent* rcomp = entity->get_component<RenderComponent>();
 
 			// Creating the quad
-			// TODO: Change texture cord according to animation component
-			Quad quad = renderer->create_quad(tcomp->get_pos(), tcomp->get_size(), rcomp->get_color(), rcomp->get_tex_cord(), rcomp->get_texture());
+			glm::vec4 tex_cord = rcomp->get_tex_cord();
+			if (entity->has_component<AnimationComponent>())
+			{
+				AnimationComponent* acomp = entity->get_component<AnimationComponent>();
+				tex_cord = acomp->get_current_frame();
+			}
+
+			Quad quad = renderer->create_quad(tcomp->get_pos(), tcomp->get_size(), rcomp->get_color(), tex_cord, rcomp->get_texture());
 			renderer->push_quad(quad);
 		}
 		renderer->render_end();
@@ -104,6 +110,9 @@ namespace Sparky {
 			std::cout << i << std::endl;
 		std::cout << "\nBoxCollider entities: " << this->box_collider_entity.size() << " entites\n";
 		for (auto& i: this->box_collider_entity)
+			std::cout << i << std::endl;
+		std::cout << "\nAnimation entities: " << this->animation_entity.size() << " entites\n";
+		for (auto& i: this->animation_entity)
 			std::cout << i << std::endl;
 	
 		std::cout << "\nMain entity buffers: " << this->entity_buffer.size() << " total entities\n";

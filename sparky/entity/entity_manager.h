@@ -33,7 +33,11 @@ namespace Sparky {
 			{
 				this->box_collider_entity.push_back(entity->get_id());
 			}
-			assert((3 == COMPONENT_AMT) && "New component needs to be handled here.");
+			else if (typeid(T) == typeid(AnimationComponent))
+			{
+				this->animation_entity.push_back(entity->get_id());
+			}
+			assert((4 == COMPONENT_AMT) && "New component needs to be handled here.");
 		}
 
 		template<typename T>
@@ -60,7 +64,14 @@ namespace Sparky {
 					this->box_collider_entity.end()
 				);
 			}
-			assert((3 == COMPONENT_AMT) && "New component needs to be handled here.");
+			else if (typeid(T) == typeid(AnimationComponent))
+			{
+				this->animation_entity.erase(
+					std::remove(this->animation_entity.begin(), this->animation_entity.end(), entity->get_id()),
+					this->animation_entity.end()
+				);
+			}
+			assert((4 == COMPONENT_AMT) && "New component needs to be handled here.");
 		}
 	
 	public:
@@ -76,5 +87,6 @@ namespace Sparky {
 		std::vector<std::string> transform_entity;
 		std::vector<std::string> render_entity;
 		std::vector<std::string> box_collider_entity;
+		std::vector<std::string> animation_entity;
 	};
 }

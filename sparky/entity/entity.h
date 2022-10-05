@@ -15,13 +15,14 @@ namespace Sparky {
 
 	public:
 		template<typename T, typename... Args>
-		void add_component(Args&&... args)
+		T* add_component(Args&&... args)
 		{
 			std::shared_ptr<T> component = std::make_shared<T>(std::forward<Args>(args)...);
 			this->components[component->name] = component;
 
 			// Assigning the entity to its component in the entity manager
 			this->manager->add_entity_to_comp<T>(this->self); 
+			return component.get();
 		}
 
 		template<typename T>

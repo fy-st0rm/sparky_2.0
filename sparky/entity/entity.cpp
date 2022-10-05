@@ -22,9 +22,13 @@ namespace Sparky {
 
 			if (i.first == TRANSFORM_COMPONENT)
 				this->manager->remove_entity_from_comp<TransformComponent>(this->self);
-			if (i.first == RENDER_COMPONENT)
+			else if (i.first == RENDER_COMPONENT)
 				this->manager->remove_entity_from_comp<RenderComponent>(this->self);
-			SP_ASSERT(2 == COMPONENT_AMT);
+			else if (i.first == BOX_COLLIDER_COMPONENT)
+				this->manager->remove_entity_from_comp<BoxColliderComponent>(this->self);
+			else if (i.first == ANIMATION_COMPONENT)
+				this->manager->remove_entity_from_comp<AnimationComponent>(this->self);
+			assert((4 == COMPONENT_AMT) && "New component needs to be handled here.");
 
 			this->manager->remove_entity(this->self);
 		}

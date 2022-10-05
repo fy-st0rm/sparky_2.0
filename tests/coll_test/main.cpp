@@ -49,7 +49,7 @@ public:
 		this->ent_1 = std::make_shared<Sparky::Entity>(this->manager);
 		this->ent_1->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 100));
 		this->ent_1->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), &this->white);
-		this->ent_1->add_component<Sparky::BoxColliderComponent>(glm::vec4(100, 100, 100, 100), Sparky::DYNAMIC_COLLIDER);
+		this->ent_1->add_component<Sparky::BoxColliderComponent>(glm::vec4(100, 100, 100, 100));
 		this->tcomp = this->ent_1->get_component<Sparky::TransformComponent>();
 
 		int x = 0;
@@ -58,14 +58,14 @@ public:
 			Sparky::Entity* box = new Sparky::Entity(this->manager);
 			box->add_component<Sparky::TransformComponent>(glm::vec3(x, 50, 0), glm::vec2(100, 100));
 			box->add_component<Sparky::RenderComponent>(glm::vec4(i % 2,0,1,1), glm::vec4(0,0,1,1), &this->white);
-			box->add_component<Sparky::BoxColliderComponent>(glm::vec4(x, 50, 100, 100), Sparky::STATIC_COLLIDER);
+			box->add_component<Sparky::BoxColliderComponent>(glm::vec4(x, 50, 100, 100));
 			x += 100;
 		}
 
 		Sparky::Entity* box = new Sparky::Entity(this->manager);
 		box->add_component<Sparky::TransformComponent>(glm::vec3(0, 150, 0), glm::vec2(100, 100));
 		box->add_component<Sparky::RenderComponent>(glm::vec4(1,0,1,1), glm::vec4(0,0,1,1), &this->white);
-		box->add_component<Sparky::BoxColliderComponent>(glm::vec4(0, 150, 100, 100), Sparky::DYNAMIC_COLLIDER);
+		box->add_component<Sparky::BoxColliderComponent>(glm::vec4(0, 150, 100, 100));
 
 	};
 	~Main() {};

@@ -10,7 +10,7 @@ namespace Sparky {
 		this->hits["down"] = false;
 	}
 
-	bool BoxColliderComponent::sync_with_transform(TransformComponent* comp)
+	void BoxColliderComponent::sync_with_transform(TransformComponent* comp)
 	{
 		glm::vec3 pos  = comp->get_pos();
 		glm::vec2 size = comp->get_size();
@@ -29,9 +29,6 @@ namespace Sparky {
 
 	void BoxColliderComponent::resolve_intersection(BoxColliderComponent* other)
 	{
-		// Resolve intersection only for dynamic objects
-		if (this->mode == STATIC_COLLIDER) return;
-
 		glm::vec4 rect_b = other->get_rect();
 
 		// Getting left, right, up and down intersections
