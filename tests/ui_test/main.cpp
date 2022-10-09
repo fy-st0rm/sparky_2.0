@@ -61,9 +61,9 @@ private:
 	std::shared_ptr<Sparky::UIRenderer> ui_renderer;
 
 public:
-	Main(void* arg_struct)
+	Main(Sparky::Application* app)
+		:app(app)
 	{
-		app = ((ArgStruct*)arg_struct)->app;
 
 		// Initializing camera
 		this->camera = std::make_shared<Sparky::OrthoCamera>(glm::vec3(0,0,0), 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
@@ -99,7 +99,7 @@ public:
 	void on_start()
 	{
 		ArgStruct app = {this};
-		add_scene<Main>("Main", &app);
+		add_scene<Main>("Main", this);
 		switch_scene("Main");
 	}
 };

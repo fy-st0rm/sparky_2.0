@@ -21,10 +21,10 @@ namespace Sparky {
 		void destroy();
 	
 		// Function to add new scenes
-		template<typename T>
-		void add_scene(const std::string& name, void* arg_struct)
+		template<typename T, typename... Args>
+		void add_scene(const std::string& name, Args&&... args)
 		{
-			this->scenes.insert({name, std::make_shared<T>(arg_struct)});
+			this->scenes.insert({name, std::make_shared<T>(std::forward<Args>(args)...)});
 		}
 	
 		void switch_scene(const std::string& name);
