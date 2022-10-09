@@ -12,7 +12,9 @@ private:
 
 	// Camera
 	std::shared_ptr<Sparky::OrthoCamera> camera;
-	Sparky::Texture white;
+
+	// White texture
+	std::shared_ptr<Sparky::Texture> white;
 
 	// Renderer
 	std::shared_ptr<Sparky::QuadRenderer> renderer;
@@ -20,8 +22,7 @@ private:
 	// Entity manager
 	std::shared_ptr<Sparky::EntityManager> manager;
 
-	// Entity
-	std::shared_ptr<Sparky::Entity> ent_1, ent_2;
+	Sparky::Entity* ent_1;
 
 	// Movement
 	Sparky::TransformComponent* tcomp;
@@ -39,6 +40,9 @@ public:
 		// Initializing camera
 		this->camera = std::make_shared<Sparky::OrthoCamera>(glm::vec3(0,0,0), 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
 
+		// Creating white texture
+		this->white = std::make_shared<Sparky::Texture>();
+
 		// Creating renderer
 		this->renderer = std::make_shared<Sparky::QuadRenderer>(1000, this->camera);
 
@@ -46,7 +50,7 @@ public:
 		this->manager = std::make_shared<Sparky::EntityManager>();
 
 		// Entity
-		this->ent_1 = std::make_shared<Sparky::Entity>(this->manager);
+		this->ent_1 = this->manager->add_entity<Sparky::Entity>(this->manager);
 		this->ent_1->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 100));
 		this->ent_1->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), this->white);
 		this->ent_1->add_component<Sparky::BoxColliderComponent>(glm::vec4(100, 100, 100, 100));
@@ -55,14 +59,14 @@ public:
 		int x = 0;
 		for (int i = 0; i < 20; i++)
 		{
-			Sparky::Entity* box = new Sparky::Entity(this->manager);
+			Sparky::Entity* box = this->manager->add_entity<Sparky::Entity>(this->manager);
 			box->add_component<Sparky::TransformComponent>(glm::vec3(x, 50, 0), glm::vec2(100, 100));
 			box->add_component<Sparky::RenderComponent>(glm::vec4(i % 2,0,1,1), glm::vec4(0,0,1,1), this->white);
 			box->add_component<Sparky::BoxColliderComponent>(glm::vec4(x, 50, 100, 100));
 			x += 100;
 		}
 
-		Sparky::Entity* box = new Sparky::Entity(this->manager);
+		Sparky::Entity* box = this->manager->add_entity<Sparky::Entity>(this->manager);
 		box->add_component<Sparky::TransformComponent>(glm::vec3(0, 150, 0), glm::vec2(100, 100));
 		box->add_component<Sparky::RenderComponent>(glm::vec4(1,0,1,1), glm::vec4(0,0,1,1), this->white);
 		box->add_component<Sparky::BoxColliderComponent>(glm::vec4(0, 150, 100, 100));

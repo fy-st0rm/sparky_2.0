@@ -10,15 +10,18 @@ class Button : public Sparky::UIElement
 public:
 	glm::vec3 pos;
 	glm::vec2 size;
-	Sparky::Texture white;
+	std::shared_ptr<Sparky::Texture> white;
 
 public:
 	Button(std::shared_ptr<Sparky::UIRenderer> ui_renderer, glm::vec3 pos, glm::vec2 size)
 		:pos(pos), size(size)
 	{
-		this->ui_entity = std::make_shared<Sparky::Entity>(ui_renderer->get_entity_manager());
+		this->white = std::make_shared<Sparky::Texture>();
+		std::shared_ptr<Sparky::EntityManager> manager = ui_renderer->get_entity_manager();
+
+		this->ui_entity = manager->add_entity<Sparky::Entity>(manager);
 		this->ui_entity->add_component<Sparky::TransformComponent>(pos, size);
-		this->ui_entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), white);
+		this->ui_entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), this->white);
 	}
 
 	void on_hover()

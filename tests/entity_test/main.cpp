@@ -12,16 +12,15 @@ private:
 
 	// Camera
 	std::shared_ptr<Sparky::OrthoCamera> camera;
-	Sparky::Texture white;
+
+	// White texture
+	std::shared_ptr<Sparky::Texture> white;
 
 	// Renderer
 	std::shared_ptr<Sparky::QuadRenderer> renderer;
 
 	// Entity manager
 	std::shared_ptr<Sparky::EntityManager> manager;
-
-	// Entity
-	std::shared_ptr<Sparky::Entity> entity;
 
 public:
 	Main(void* arg_struct)
@@ -31,6 +30,9 @@ public:
 		// Initializing camera
 		this->camera = std::make_shared<Sparky::OrthoCamera>(glm::vec3(0,0,0), 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
 
+		// Creating white texture
+		this->white = std::make_shared<Sparky::Texture>();
+
 		// Creating renderer
 		this->renderer = std::make_shared<Sparky::QuadRenderer>(1000, this->camera);
 
@@ -38,9 +40,9 @@ public:
 		this->manager = std::make_shared<Sparky::EntityManager>();
 
 		// Entity
-		this->entity = std::make_shared<Sparky::Entity>(this->manager);
-		this->entity->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 100));
-		this->entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), this->white);
+		Sparky::Entity* entity = this->manager->add_entity<Sparky::Entity>(this->manager);
+		entity->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 100));
+		entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), this->white);
 	};
 	~Main() {};
 

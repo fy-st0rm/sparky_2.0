@@ -5,7 +5,7 @@ namespace Sparky {
 	class UIElement
 	{
 	public:
-		std::shared_ptr<Entity> ui_entity;
+		Entity* ui_entity;
 	public:
 		virtual void on_update() {};
 		virtual void on_hover()  {};

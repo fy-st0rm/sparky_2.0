@@ -6,7 +6,6 @@ namespace Sparky {
 	{
 		this->id = uuid::generate_uuid_v4();
 		this->self = std::shared_ptr<Entity>(this, [](Entity*){}); // Lamba function is to prevent shared_ptr to delete the pointer
-		this->manager->push_entity(this->self);
 	}
 
 	Entity::~Entity()

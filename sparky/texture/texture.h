@@ -28,7 +28,7 @@ namespace Sparky {
 		void pack_surface(SDL_Surface* surface);
 	
 	private:
-		unsigned int texture_id;
+		unsigned int texture_id = 0;
 		int width, height;
 	};
 }

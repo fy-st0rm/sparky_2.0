@@ -24,8 +24,10 @@ namespace Sparky {
 		unsigned int format = this->get_color_format(surface);
 
 		// Deleting old texture if exists
-		if (this->texture_id > 0)
+		if (this->texture_id != 0)
+		{
 			GLCall(glDeleteTextures(1, &this->texture_id));
+		}
 	
 		// Binding the texture
 		GLCall(glGenTextures(1, &this->texture_id));

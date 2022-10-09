@@ -2,11 +2,6 @@
 #include "entity.h"
 
 namespace Sparky {
-	void EntityManager::push_entity(std::shared_ptr<Entity> entity)
-	{
-		this->entity_buffer[entity->get_id()] = entity;
-	}
-
 	void EntityManager::remove_entity(std::shared_ptr<Entity> entity)
 	{
 		this->entity_buffer.erase(entity->get_id());
@@ -87,7 +82,7 @@ namespace Sparky {
 				a_comp->reset_hits();
 				std::unordered_map<std::string, bool> hits = a_comp->get_hits();
 
-				// Calculating left, right, up and down intersections
+				// Resolvuing the intersection
 				if (a_comp->intersect(b_comp))
 				{
 					a_comp->resolve_intersection(b_comp);

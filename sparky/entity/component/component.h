@@ -75,7 +75,7 @@ namespace Sparky {
 
 	public:
 		RenderComponent() {}
-		RenderComponent(glm::vec4 color, glm::vec4 tex_cord, Texture& texture) 
+		RenderComponent(glm::vec4 color, glm::vec4 tex_cord, std::shared_ptr<Texture> texture) 
 			:color(color), tex_cord(tex_cord), texture(texture)
 		{}
 		~RenderComponent() {}
@@ -87,13 +87,13 @@ namespace Sparky {
 		glm::vec4 get_tex_cord()        const { return this->tex_cord; }
 		void set_tex_cord(glm::vec4 tex_cord) { this->tex_cord = tex_cord; }
 
-		Texture* get_texture()             { return &this->texture; }
-		void set_texture(Texture& texture) { this->texture = texture; }
+		Texture* get_texture() { return this->texture.get(); }
+		void set_texture(std::shared_ptr<Texture> texture) { this->texture = texture; }
 	
 	private:
 		glm::vec4 color;
 		glm::vec4 tex_cord;
-		Texture texture;
+		std::shared_ptr<Texture> texture;
 	};
 
 	/*

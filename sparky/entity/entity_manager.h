@@ -15,8 +15,22 @@ namespace Sparky {
 		~EntityManager() {};
 	
 	public:
-		void push_entity(std::shared_ptr<Entity> entity);
 		void remove_entity(std::shared_ptr<Entity> entity);
+
+		Entity* get_entity(const std::string& id)
+		{
+			if (this->entity_buffer.find(id) == this->entity_buffer.end())
+				Log::error("Entity with id: " + id + " cannot be found.", SPARKY_NULL);
+			return this->entity_buffer[id].get();
+		}
+
+		template<typename T, typename... Args>
+		T* add_entity(Args&&... args)
+		{
+			std::shared_ptr<T> entity = std::make_shared<T>(std::forward<Args>(args)...);
+			this->entity_buffer[entity->get_id()] = entity;
+			return entity.get();
+		}
 
 		template<typename T>
 		void add_entity_to_comp(std::shared_ptr<Entity> entity)

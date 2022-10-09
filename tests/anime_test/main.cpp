@@ -25,7 +25,6 @@ private:
 	std::shared_ptr<Sparky::EntityManager> manager;
 
 	// Entity
-	std::shared_ptr<Sparky::Entity> ent;
 	std::shared_ptr<Sparky::Texture> player_sprite;
 
 	// Components
@@ -57,11 +56,11 @@ public:
 		this->player_sprite = std::make_shared<Sparky::Texture>("player.png");
 
 		// Entity
-		this->ent = std::make_shared<Sparky::Entity>(this->manager);
-		this->tcomp = this->ent->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 187));
-		this->ent->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0.0f,1.0f/2.0f,1.0f/11.0f,1.0f/2.0f), *this->player_sprite.get());
-		this->ent->add_component<Sparky::BoxColliderComponent>(glm::vec4(100, 100, 100, 100));
-		this->acomp = this->ent->add_component<Sparky::AnimationComponent>();
+		Sparky::Entity* ent = this->manager->add_entity<Sparky::Entity>(this->manager);
+		this->tcomp = ent->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 187));
+		ent->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0.0f,1.0f/2.0f,1.0f/11.0f,1.0f/2.0f), this->player_sprite);
+		ent->add_component<Sparky::BoxColliderComponent>(glm::vec4(100, 100, 100, 100));
+		this->acomp = ent->add_component<Sparky::AnimationComponent>();
 
 		this->set_up_animation();
 	};
@@ -98,36 +97,18 @@ public:
 		{
 			switch (event.key.keysym.sym)
 			{
-				case SDLK_w:
-					this->up = true;
+				case SDLK_1:
+				{
+					std::vector<std::string> states = { IDLE, LEFT };
+					this->acomp->switch_state(states);
 					break;
-				case SDLK_s:
-					this->down = true;
+				}
+				case SDLK_2:
+				{
+					std::vector<std::string> states = { WALK, LEFT };
+					this->acomp->switch_state(states);
 					break;
-				case SDLK_a:
-					this->left = true;
-					break;
-				case SDLK_d:
-					this->right = true;
-					break;
-			}
-		}
-		else if (event.type == SDL_KEYUP)
-		{
-			switch (event.key.keysym.sym)
-			{
-				case SDLK_w:
-					this->up = false;
-					break;
-				case SDLK_s:
-					this->down = false;
-					break;
-				case SDLK_a:
-					this->left = false;
-					break;
-				case SDLK_d:
-					this->right = false;
-					break;
+				}
 			}
 		}
 	}
@@ -135,34 +116,6 @@ public:
 	void on_update(double dt)
 	{
 		app->clear({0.5f, 0.5f, 0.5f, 1.0f});
-
-		glm::vec3 pos = this->tcomp->get_pos();
-		if (this->up)
-		{
-			pos.y += speed;
-			std::vector<std::string> states = { WALK, LEFT };
-			this->acomp->switch_state(states);
-		}
-		if (this->down)
-		{
-			pos.y -= speed;
-			std::vector<std::string> states = { WALK, LEFT };
-			this->acomp->switch_state(states);
-		}
-		if (this->left)
-		{
-			pos.x -= speed;
-			std::vector<std::string> states = { WALK, LEFT };
-			this->acomp->switch_state(states);
-		}
-		if (this->right)
-		{
-			pos.x += speed;
-			std::vector<std::string> states = { WALK, LEFT };
-			this->acomp->switch_state(states);
-		}
-		this->tcomp->set_pos(pos);
-
 		this->manager->update(this->renderer);
 		//this->manager->print_buffer();
 	}
