@@ -37,13 +37,14 @@ namespace Sparky {
 	
 		// Setting up alpha channels and blendings
 		GLCall(glEnable(GL_BLEND));
+		GLCall(glEnable(GL_DEPTH_TEST));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	}
 	
 	void Window::clear(glm::vec4 color)
 	{
 		GLCall(glClearColor(color.x, color.y, color.z, color.w));
-		GLCall(glClear(GL_COLOR_BUFFER_BIT));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	}
 	
 	void Window::update()
