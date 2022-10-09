@@ -67,7 +67,7 @@ namespace Sparky {
 
 	glm::vec4 AnimationComponent::get_current_frame()
 	{
-		if (this->curr_node.get_name() == "null")
+		if (this->curr_node.get_name().length() == 0)
 			Log::error("Default animation state is not defined.", SPARKY_NULL); // TODO: Add usage here
 
 		// Getting the data from the node and extracting the current coordinates

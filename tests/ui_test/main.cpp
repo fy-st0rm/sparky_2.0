@@ -5,6 +5,47 @@ struct ArgStruct
 	Sparky::Application* app;
 };
 
+class Button : public Sparky::UIElement
+{
+public:
+	glm::vec3 pos;
+	glm::vec2 size;
+	Sparky::Texture white;
+
+public:
+	Button(std::shared_ptr<Sparky::UIRenderer> ui_renderer, glm::vec3 pos, glm::vec2 size)
+		:pos(pos), size(size)
+	{
+		this->ui_entity = std::make_shared<Sparky::Entity>(ui_renderer->get_entity_manager());
+		this->ui_entity->add_component<Sparky::TransformComponent>(pos, size);
+		this->ui_entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), white);
+	}
+
+	void on_hover()
+	{
+		Sparky::RenderComponent* rcomp = this->ui_entity->get_component<Sparky::RenderComponent>();
+		glm::vec4 color = {0.5, 0.5, 0.5, 1};
+		rcomp->set_color(color);
+	}
+
+	void on_update()
+	{
+		Sparky::RenderComponent* rcomp = this->ui_entity->get_component<Sparky::RenderComponent>();
+		glm::vec4 color = {1, 1, 1, 1};
+		rcomp->set_color(color);
+	}
+
+	void on_left_click()
+	{
+		Sparky::Log::sucess("Left click", Sparky::SPARKY_NULL);
+	}
+
+	void on_right_click()
+	{
+		Sparky::Log::sucess("Right click", Sparky::SPARKY_NULL);
+	}
+};
+
 class Main : public Sparky::Scene
 {
 private:
@@ -12,14 +53,9 @@ private:
 
 	// Camera
 	std::shared_ptr<Sparky::OrthoCamera> camera;
-	std::shared_ptr<Sparky::Texture> texture;
 
-	// Renderer
-	std::shared_ptr<Sparky::QuadRenderer> qr;
-	std::shared_ptr<Sparky::TextRenderer> tr;
-
-	// File
-	std::stringstream file_data;
+	// UI Renderer
+	std::shared_ptr<Sparky::UIRenderer> ui_renderer;
 
 public:
 	Main(void* arg_struct)
@@ -27,42 +63,26 @@ public:
 		app = ((ArgStruct*)arg_struct)->app;
 
 		// Initializing camera
-		glm::vec3 pos = { 0.0f, 0.0f, 0.0f };
-		this->camera = std::make_shared<Sparky::OrthoCamera>(pos, 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
-		this->texture = std::make_shared<Sparky::Texture>("Us.png");
+		this->camera = std::make_shared<Sparky::OrthoCamera>(glm::vec3(0,0,0), 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
 
-		// Initializing renderers
-		this->qr = std::make_shared<Sparky::QuadRenderer>(1000, this->camera);
-		this->tr = std::make_shared<Sparky::TextRenderer>("consola.ttf", 15, 1000, this->camera);
+		// Initializing ui renderer
+		this->ui_renderer = std::make_shared<Sparky::UIRenderer>(10, camera);
 
-		// Reading a file
-		std::ifstream file("test.txt");
-		std::string line;
-		while (std::getline(file, line))
-			this->file_data << line;
-
-		std::cout << "Main scene constructed.\n";
+		// Creating a button
+		this->ui_renderer->add_ui_element<Button>(this->ui_renderer, glm::vec3(100, 100, 0), glm::vec2(300, 50));
 	};
 	~Main() {};
 
 public:
+	void on_event(SparkyEvent event)
+	{
+		this->ui_renderer->handle_event(event);
+	}
+
 	void on_update(double dt)
 	{
 		app->clear({0.0f, 0.0f, 0.0f, 1.0f});
-
-		{
-			Sparky::Quad quad = this->qr->create_quad(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec2(150,150), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), this->texture.get());
-
-			this->qr->render_begin();
-			this->qr->push_quad(quad);
-			this->qr->render_end();
-		}
-
-		{
-			this->tr->render_begin();
-			this->tr->push_text(file_data.str(), glm::vec3(100.0f, 100.0f, 0.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-			this->tr->render_end();
-		}
+		this->ui_renderer->update();
 	}
 };
 

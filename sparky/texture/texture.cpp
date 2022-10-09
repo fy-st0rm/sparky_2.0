@@ -65,6 +65,7 @@ namespace Sparky {
 		}
 		SDL_UnlockSurface(surface);
 	}
+
 	unsigned int Texture::get_color_format(SDL_Surface* surface)
 	{
 		// Gets the surface format for the texture
@@ -95,7 +96,7 @@ namespace Sparky {
 			SDL_memmove(dst, src, len);
 			dst += len; 
 			src += surface->pitch;
-		}    
+		}
 		surface->pitch = len;
 	}
 }

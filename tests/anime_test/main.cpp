@@ -59,7 +59,7 @@ public:
 		// Entity
 		this->ent = std::make_shared<Sparky::Entity>(this->manager);
 		this->tcomp = this->ent->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 187));
-		this->ent->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0.0f,1.0f/2.0f,1.0f/11.0f,1.0f/2.0f), this->player_sprite.get());
+		this->ent->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0.0f,1.0f/2.0f,1.0f/11.0f,1.0f/2.0f), *this->player_sprite.get());
 		this->ent->add_component<Sparky::BoxColliderComponent>(glm::vec4(100, 100, 100, 100));
 		this->acomp = this->ent->add_component<Sparky::AnimationComponent>();
 

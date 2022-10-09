@@ -72,6 +72,7 @@ win_cmp_texture:
 win_cmp_renderer:
 	$(CC) $(LINC) -c renderer/quad_renderer/*.cpp
 	$(CC) $(LINC) -c renderer/text_renderer/*.cpp
+	$(CC) $(LINC) -c renderer/ui_renderer/*.cpp
 
 win_cmp_app:
 	$(CC) $(LINC) -c application/*.cpp

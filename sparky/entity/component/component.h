@@ -75,7 +75,7 @@ namespace Sparky {
 
 	public:
 		RenderComponent() {}
-		RenderComponent(glm::vec4 color, glm::vec4 tex_cord, Texture* texture) 
+		RenderComponent(glm::vec4 color, glm::vec4 tex_cord, Texture& texture) 
 			:color(color), tex_cord(tex_cord), texture(texture)
 		{}
 		~RenderComponent() {}
@@ -87,13 +87,13 @@ namespace Sparky {
 		glm::vec4 get_tex_cord()        const { return this->tex_cord; }
 		void set_tex_cord(glm::vec4 tex_cord) { this->tex_cord = tex_cord; }
 
-		Texture*  get_texture()      const { return this->texture; }
-		void set_texture(Texture* texture) { this->texture = texture; }
+		Texture* get_texture()             { return &this->texture; }
+		void set_texture(Texture& texture) { this->texture = texture; }
 	
 	private:
 		glm::vec4 color;
 		glm::vec4 tex_cord;
-		Texture* texture;
+		Texture texture;
 	};
 
 	/*
@@ -176,7 +176,7 @@ namespace Sparky {
 
 	private:
 		std::string id;
-		std::string name = "null";
+		std::string name;
 		std::vector<glm::vec4> data;
 		float speed = 0.0f;
 		std::vector<AnimationNode> child;

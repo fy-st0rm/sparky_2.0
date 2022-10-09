@@ -45,7 +45,7 @@ public:
 		// Entity
 		this->entity = std::make_shared<Sparky::Entity>(this->manager);
 		this->entity->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 100));
-		this->entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), &this->white);
+		this->entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), this->white);
 		this->tcomp = this->entity->get_component<Sparky::TransformComponent>();
 	};
 	~Main() {};
