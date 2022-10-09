@@ -26,7 +26,7 @@ private:
 
 	// Movement
 	Sparky::TransformComponent* tcomp;
-	float speed = 5.0f;
+	float speed = 0.5f;
 	bool left, right, up, down;
 
 public:
@@ -117,24 +117,25 @@ public:
 
 	void on_update(double dt)
 	{
+		std::cout << dt << std::endl;
 		app->clear({0.0f, 0.0f, 0.0f, 1.0f});
 
 		glm::vec3 pos = this->tcomp->get_pos();
 		if (this->up)
 		{
-			pos.y += speed;
+			pos.y += speed * dt;
 		}
 		if (this->down)
 		{
-			pos.y -= speed;
+			pos.y -= speed * dt;
 		}
 		if (this->left)
 		{
-			pos.x -= speed;
+			pos.x -= speed * dt;
 		}
 		if (this->right)
 		{
-			pos.x += speed;
+			pos.x += speed * dt;
 		}
 		this->tcomp->set_pos(pos);
 

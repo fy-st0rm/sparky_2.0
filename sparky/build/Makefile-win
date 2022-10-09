@@ -1,4 +1,5 @@
-CC  = g++
+CC = g++
+FLAG = -w
 OUT = libsparky.a
 LINC = -I. -Ivendor/GLEW/include -Ivendor/SDL2_64bit/include -Ivendor/SDL2_64bit/include/SDL2 -Ivendor/imgui/
 
@@ -38,42 +39,42 @@ win_clean:
 	erase $(OUT)
 
 win_cmp_core:
-	$(CC) $(LINC) -c core/*.cpp
+	$(CC) $(FLAG) $(LINC) -c core/*.cpp
 
 win_cmp_imgui:
-	$(CC) $(LINC) -c vendor/imgui/*.cpp
-	$(CC) $(LINC) -c vendor/imgui/backends/imgui_impl_sdl.cpp
-	$(CC) $(LINC) -c vendor/imgui/backends/imgui_impl_opengl3.cpp
+	$(CC) $(FLAG) $(LINC) -c vendor/imgui/*.cpp
+	$(CC) $(FLAG) $(LINC) -c vendor/imgui/backends/imgui_impl_sdl.cpp
+	$(CC) $(FLAG) $(LINC) -c vendor/imgui/backends/imgui_impl_opengl3.cpp
 
 win_cmp_gui:
-	$(CC) $(LINC) -c gui/*.cpp
+	$(CC) $(FLAG) $(LINC) -c gui/*.cpp
 
 win_cmp_entity:
-	$(CC) $(LINC) -c entity/*.cpp
+	$(CC) $(FLAG) $(LINC) -c entity/*.cpp
 
 win_cmp_component:
-	$(CC) $(LINC) -c entity/component/*.cpp
+	$(CC) $(FLAG) $(LINC) -c entity/component/*.cpp
 
 win_cmp_window:
-	$(CC) $(LINC) -c window/*.cpp
+	$(CC) $(FLAG) $(LINC) -c window/*.cpp
 
 win_cmp_buffers:
-	$(CC) $(LINC) -c buffers/*.cpp
+	$(CC) $(FLAG) $(LINC) -c buffers/*.cpp
 
 win_cmp_shader:
-	$(CC) $(LINC) -c shader/*.cpp
+	$(CC) $(FLAG) $(LINC) -c shader/*.cpp
 
 win_cmp_camera:
-	$(CC) $(LINC) -c camera/*.cpp
+	$(CC) $(FLAG) $(LINC) -c camera/*.cpp
 
 win_cmp_texture:
-	$(CC) $(LINC) -c texture/*.cpp
+	$(CC) $(FLAG) $(LINC) -c texture/*.cpp
 
 win_cmp_renderer:
-	$(CC) $(LINC) -c renderer/quad_renderer/*.cpp
-	$(CC) $(LINC) -c renderer/text_renderer/*.cpp
-	$(CC) $(LINC) -c renderer/ui_renderer/*.cpp
+	$(CC) $(FLAG) $(LINC) -c renderer/quad_renderer/*.cpp
+	$(CC) $(FLAG) $(LINC) -c renderer/text_renderer/*.cpp
+	$(CC) $(FLAG) $(LINC) -c renderer/ui_renderer/*.cpp
 
 win_cmp_app:
-	$(CC) $(LINC) -c application/*.cpp
+	$(CC) $(FLAG) $(LINC) -c application/*.cpp
 

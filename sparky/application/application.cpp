@@ -76,14 +76,15 @@ namespace Sparky {
 				this->scenes[this->curr_scene]->on_imgui_render();
 				Gui::end_frame();
 			}
-	
-			// Calculating delta time
-			auto end_t = std::chrono::high_resolution_clock::now();
-			this->dt = std::chrono::duration<double, std::milli>(end_t - start_t).count();
-	
+
 			// Capping frame rate
 			if (req_frame > this->dt)
 				SDL_Delay(req_frame - this->dt);
+	
+			// Calculating delta time
+			auto end_t = std::chrono::high_resolution_clock::now();
+			using ms = std::chrono::duration<double, std::milli>;
+			this->dt = std::chrono::duration_cast<ms>(end_t - start_t).count();
 	
 			// Updating window
 			this->window->update();
