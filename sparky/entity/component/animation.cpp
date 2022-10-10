@@ -49,7 +49,11 @@ namespace Sparky {
 		state.erase(state.begin());
 
 		// Scanning through the childs
-		AnimationNode found_node = this->find_curr_node(node, state);
+		AnimationNode found_node;
+		if (state.size())
+			found_node = this->find_curr_node(node, state);
+		else
+			found_node = node;
 
 		// Reseting the index of the frame if the state is new
 		if (this->curr_node.get_name() == "null")
