@@ -33,6 +33,7 @@ private:
 
 	// Movement
 	float speed = 5.0f;
+	float ang = 0.0f;
 	bool left, right, up, down;
 
 public:
@@ -44,7 +45,7 @@ public:
 		left = right = up = down = false;
 
 		// Initializing camera
-		this->camera = std::make_shared<Sparky::OrthoCamera>(glm::vec3(0,0,0), 0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 1.0f);
+		this->camera = std::make_shared<Sparky::OrthoCamera>(glm::vec3(0,0,0), 0.0f, 800.0f, 0.0f, 600.0f, -1000.0f, 1000.0f);
 
 		// Creating renderer
 		this->renderer = std::make_shared<Sparky::QuadRenderer>(1000, this->camera);
@@ -57,7 +58,8 @@ public:
 
 		// Entity
 		Sparky::Entity* ent = this->manager->add_entity<Sparky::Entity>(this->manager);
-		this->tcomp = ent->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 187));
+		glm::mat4 rot = glm::rotate(glm::mat4(1.0f), glm::radians(this->ang), glm::vec3(0,1,0));
+		this->tcomp = ent->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 187), rot);
 		ent->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0.0f,1.0f/2.0f,1.0f/11.0f,1.0f/2.0f), this->player_sprite);
 		ent->add_component<Sparky::BoxColliderComponent>(glm::vec4(100, 100, 100, 100));
 		this->acomp = ent->add_component<Sparky::AnimationComponent>();
@@ -108,6 +110,12 @@ public:
 					std::vector<std::string> states = { WALK, LEFT };
 					this->acomp->switch_state(states);
 					break;
+				}
+				case SDLK_q:
+				{
+					this->ang += 1.0f;
+					glm::mat4 rot = glm::rotate(glm::mat4(1.0f), glm::radians(this->ang), glm::vec3(0,1,0));
+					this->tcomp->set_rotation(rot);
 				}
 			}
 		}

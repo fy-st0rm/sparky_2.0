@@ -37,8 +37,8 @@ namespace Sparky {
 
 	public:
 		TransformComponent() {}
-		TransformComponent(glm::vec3 pos, glm::vec2 size) 
-			:pos(pos), size(size)
+		TransformComponent(glm::vec3 pos, glm::vec2 size, glm::mat4 rotation) 
+			:pos(pos), size(size), rotation(rotation)
 		{}
 		~TransformComponent() {}
 	
@@ -50,15 +50,18 @@ namespace Sparky {
 		}
 	
 	public:
-		glm::vec3 get_pos()  const { return this->pos; }
-		glm::vec2 get_size() const { return this->size; }
+		glm::vec3 get_pos()      const { return this->pos;      }
+		glm::vec2 get_size()     const { return this->size;     }
+		glm::mat4 get_rotation() const { return this->rotation; }
 
-		void set_pos(glm::vec3 pos)   { this->pos = pos; }
-		void set_size(glm::vec2 size) { this->size = size; }
+		void set_pos(glm::vec3 pos)           { this->pos = pos;           }
+		void set_size(glm::vec2 size)         { this->size = size;         }
+		void set_rotation(glm::mat4 rotation) { this->rotation = rotation; }
 
 	private:
 		glm::vec3 pos;
 		glm::vec2 size;
+		glm::mat4 rotation;
 	};
 
 	/*

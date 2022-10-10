@@ -37,7 +37,7 @@ namespace Sparky {
 				tex_cord = acomp->get_current_frame();
 			}
 
-			Quad quad = renderer->create_quad(tcomp->get_pos(), tcomp->get_size(), rcomp->get_color(), tex_cord, rcomp->get_texture());
+			Quad quad = renderer->create_quad(tcomp->get_pos(), tcomp->get_size(), tcomp->get_rotation(), rcomp->get_color(), tex_cord, rcomp->get_texture());
 			renderer->push_quad(quad);
 		}
 		renderer->render_end();

@@ -106,7 +106,7 @@ namespace Sparky {
 		GLCall(glDrawElements(GL_TRIANGLES, this->buff_idx, GL_UNSIGNED_INT, NULL));
 	}
 	
-	Quad QuadRenderer::create_quad(glm::vec3 pos, glm::vec2 size, glm::vec4 color,glm::vec4 tex_cord, Texture* texture)
+	Quad QuadRenderer::create_quad(glm::vec3 pos, glm::vec2 size, glm::mat4 rotation, glm::vec4 color, glm::vec4 tex_cord, Texture* texture)
 	{
 		// Adding texture to the slots if it is new
 		int id = -1;
@@ -126,12 +126,32 @@ namespace Sparky {
 		}
 
 		Quad quad;
+
+		glm::vec4 pos1, pos2, pos3, pos4;
+		
+		// Changing the rotation position to the middle of the quad
+		glm::vec3 _pos = { -(size.x / 2), 0.0f, 0.0f };
+		pos1 = glm::vec4(_pos, 0) * rotation;
+		pos2 = glm::vec4(_pos.x + size.x, _pos.y, _pos.z, 0) * rotation;
+		pos3 = glm::vec4(_pos.x + size.x, _pos.y + size.y, _pos.z, 0) * rotation;
+		pos4 = glm::vec4(_pos.x, _pos.y + size.y, _pos.z, 0) * rotation;
+
+		// Shifiting the origin position to the required position
+		pos1.x += pos.x + (size.x / 2);
+		pos2.x += pos.x + (size.x / 2);
+		pos3.x += pos.x + (size.x / 2);
+		pos4.x += pos.x + (size.x / 2);
+
+		pos1.y += pos.y;
+		pos2.y += pos.y;
+		pos3.y += pos.y;
+		pos4.y += pos.y;
 	
 		// Quad position
-		quad.vertex[0].pos = pos;
-		quad.vertex[1].pos = glm::vec3(pos.x + size.x, pos.y, pos.z);
-		quad.vertex[2].pos = glm::vec3(pos.x + size.x, pos.y + size.y, pos.z);
-		quad.vertex[3].pos = glm::vec3(pos.x, pos.y + size.y, pos.z);
+		quad.vertex[0].pos = glm::vec3(pos1.x, pos1.y, pos1.z);
+		quad.vertex[1].pos = glm::vec3(pos2.x, pos2.y, pos2.z); 
+		quad.vertex[2].pos = glm::vec3(pos3.x, pos3.y, pos3.z);
+		quad.vertex[3].pos = glm::vec3(pos4.x, pos4.y, pos4.z);
 	
 		// Quad color
 		quad.vertex[0].color = color;

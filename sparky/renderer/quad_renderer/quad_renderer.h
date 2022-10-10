@@ -17,7 +17,7 @@ namespace Sparky {
 		void render_begin();
 		void render_end();
 	
-		Quad create_quad(glm::vec3 pos, glm::vec2 size, glm::vec4 color, glm::vec4 tex_cord, Texture* texture);
+		Quad create_quad(glm::vec3 pos, glm::vec2 size, glm::mat4 rotation, glm::vec4 color, glm::vec4 tex_cord, Texture* texture);
 		void push_quad(const Quad& quad);
 		void print_buffer();
 
