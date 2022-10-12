@@ -26,6 +26,7 @@ private:
 
 	// Entity
 	std::shared_ptr<Sparky::Texture> player_sprite;
+	std::shared_ptr<Sparky::Texture> white;
 
 	// Components
 	Sparky::TransformComponent* tcomp;
@@ -55,6 +56,7 @@ public:
 
 		// Loading sprite
 		this->player_sprite = std::make_shared<Sparky::Texture>("player.png");
+		this->white = std::make_shared<Sparky::Texture>();
 
 		// Entity
 		Sparky::Entity* ent = this->manager->add_entity<Sparky::Entity>(this->manager);
@@ -125,7 +127,6 @@ public:
 	{
 		app->clear({0.5f, 0.5f, 0.5f, 1.0f});
 		this->manager->update(this->renderer);
-		//this->manager->print_buffer();
 	}
 };
 

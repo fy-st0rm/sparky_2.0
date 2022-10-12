@@ -46,13 +46,15 @@ public:
 		this->manager = std::make_shared<Sparky::EntityManager>();
 
 		// Entity
+		glm::mat4 rot = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(1,0,0));
+
 		Sparky::Entity* entity_1 = this->manager->add_entity<Sparky::Entity>(this->manager);
-		this->tcomp1 = entity_1->add_component<Sparky::TransformComponent>(glm::vec3(200, 100, 0), glm::vec2(100, 100));
+		this->tcomp1 = entity_1->add_component<Sparky::TransformComponent>(glm::vec3(200, 100, 0), glm::vec2(100, 100), rot);
 		entity_1->add_component<Sparky::RenderComponent>(glm::vec4(1,0,1,1), glm::vec4(0,0,1,1), this->white);
 
 		Sparky::Entity* entity = this->manager->add_entity<Sparky::Entity>(this->manager);
-		this->tcomp2 = entity->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 100));
-		entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), this->white);
+		this->tcomp2 = entity->add_component<Sparky::TransformComponent>(glm::vec3(100, 100, 0), glm::vec2(100, 100), rot);
+		entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,0.5), glm::vec4(0,0,1,1), this->white);
 	};
 	~Main() {};
 

@@ -42,8 +42,9 @@ public:
 	{
 		app->clear({0.0f, 0.0f, 0.0f, 1.0f});
 
+		glm::mat4 rot = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(1,0,0));
 		{
-			Sparky::Quad quad = this->renderer1->create_quad(glm::vec3(300.0f, 100.0f, 0.0f), glm::vec2(250, 250), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), this->texture.get());
+			Sparky::Quad quad = this->renderer1->create_quad(glm::vec3(300.0f, 100.0f, 0.0f), glm::vec2(250, 250), rot, glm::vec4(1.0f, 1.0f, 1.0f, 0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), this->texture.get());
 
 			this->renderer1->render_begin();
 			this->renderer1->push_quad(quad);
@@ -51,7 +52,7 @@ public:
 		}
 
 		{
-			Sparky::Quad quad = this->renderer2->create_quad(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec2(250, 250), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), this->texture.get());
+			Sparky::Quad quad = this->renderer2->create_quad(glm::vec3(300.0f, 200.0f, 0.0f), glm::vec2(250, 250), rot, glm::vec4(1.0f, 1.0f, 1.0f, 0.5f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), this->texture.get());
 
 			this->renderer2->render_begin();
 			this->renderer2->push_quad(quad);
