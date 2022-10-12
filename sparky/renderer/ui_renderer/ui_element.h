@@ -6,6 +6,7 @@ namespace Sparky {
 	{
 	public:
 		Entity* ui_entity;
+		std::string name;
 	public:
 		virtual void on_update() {};
 		virtual void on_hover()  {};

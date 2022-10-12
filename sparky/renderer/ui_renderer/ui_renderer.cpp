@@ -16,7 +16,7 @@ namespace Sparky {
 	{
 		std::cout << "UI Elements: " << this->elements.size() << " elements\n";
 		for (auto& i : this->elements)
-			std::cout << i->ui_entity->get_id() << std::endl;
+			std::cout << i.second->ui_entity->get_id() << std::endl;
 	}
 
 	UIElement* UIRenderer::get_focused_ui()
@@ -29,14 +29,14 @@ namespace Sparky {
 
 		for (auto& i : this->elements)
 		{
-			TransformComponent* tcomp = i->ui_entity->get_component<TransformComponent>();
+			TransformComponent* tcomp = i.second->ui_entity->get_component<TransformComponent>();
 			glm::vec3 pos  = tcomp->get_pos();
 			glm::vec2 size = tcomp->get_size();
 
 			// Checking for intersection
 			if (pos.x < new_x && new_x < pos.x + size.x)
 				if (pos.y < new_y && new_y < pos.y + size.y)
-					return i.get();
+					return i.second.get();
 		}
 		return nullptr;
 	}
@@ -45,7 +45,7 @@ namespace Sparky {
 	{
 		// Handling updating
 		for (auto& i : this->elements)
-			i->on_update();
+			i.second->on_update();
 
 		// Handle hover
 		this->focused_ui = this->get_focused_ui();

@@ -15,10 +15,11 @@ namespace Sparky {
 
 	public:
 		template<typename T, typename... Args>
-		void add_ui_element(Args&&... args)
+		T* add_ui_element(Args&&... args)
 		{
 			std::shared_ptr<T> element = std::make_shared<T>(std::forward<Args>(args)...);
-			this->elements.push_back(element);
+			this->elements[element->name] = element;
+			return element.get();
 		}
 
 		void update();
@@ -26,16 +27,15 @@ namespace Sparky {
 		void print_buffer();
 
 	public:
-		std::shared_ptr<EntityManager> get_entity_manager() const { return this->entity_manager; }
-
-	private:
+		std::shared_ptr<EntityManager> get_entity_manager()    const { return this->entity_manager; }
+		std::unordered_map<std::string, std::shared_ptr<UIElement>> get_elements() const { return this->elements; }
 		UIElement* get_focused_ui();
 
 	private:
 		std::shared_ptr<OrthoCamera> camera;
 		std::shared_ptr<EntityManager> entity_manager;
 		std::shared_ptr<QuadRenderer> quad_renderer;
-		std::vector<std::shared_ptr<UIElement>> elements;
+		std::unordered_map<std::string, std::shared_ptr<UIElement>> elements;
 		UIElement* focused_ui = nullptr;
 	};
 }
