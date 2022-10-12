@@ -1,6 +1,7 @@
 #pragma once
 #include "dependency.h"
 #include "../../core/core.h"
+#include "../../core/util.h"
 #include "../quad_renderer/quad_renderer.h"
 #include "../../entity/entity.h"
 #include "ui_element.h"
@@ -31,6 +32,7 @@ namespace Sparky {
 		UIElement* get_focused_ui();
 
 	private:
+		std::shared_ptr<OrthoCamera> camera;
 		std::shared_ptr<EntityManager> entity_manager;
 		std::shared_ptr<QuadRenderer> quad_renderer;
 		std::vector<std::shared_ptr<UIElement>> elements;

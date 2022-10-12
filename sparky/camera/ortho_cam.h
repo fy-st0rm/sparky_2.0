@@ -1,6 +1,6 @@
 #pragma once
 #include "dependency.h"
-#include "shader/shader.h"
+#include "../shader/shader.h"
 
 namespace Sparky {
 	class OrthoCamera
@@ -14,9 +14,11 @@ namespace Sparky {
 
 	public:
 		// Getters and setters
-		glm::mat4 get_mvp() const { return this->mvp; }
+		glm::mat4 get_mvp()      const { return this->mvp; }
 		glm::vec3 get_position() const { return this->pos; }
-		float get_rotation() const { return this->rotation; }
+		float get_rotation()     const { return this->rotation; }
+		float get_width()        const { return this->width;  }
+		float get_height()       const { return this->height; }
 
 		void set_projection(float left, float right, float bottom, float top, float near, float far);
 		void set_position(glm::vec3 pos)
@@ -35,6 +37,7 @@ namespace Sparky {
 	
 	private:
 		float rotation = 0.0f;
+		float width, height;
 		glm::vec3 pos;
 		glm::mat4 proj_mat;
 		glm::mat4 view_mat;

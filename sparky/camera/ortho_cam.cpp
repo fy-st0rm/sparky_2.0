@@ -2,7 +2,7 @@
 
 namespace Sparky {
 	OrthoCamera::OrthoCamera(glm::vec3 pos, float left, float right, float bottom, float top, float near, float far)
-		:pos(pos)
+		:pos(pos), width(right - left), height(top - bottom)
 	{
 		this->set_projection(left, right, bottom, top, near, far);
 		this->calculate_matrix();

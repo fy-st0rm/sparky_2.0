@@ -2,6 +2,7 @@
 
 namespace Sparky {
 	UIRenderer::UIRenderer(int max_quad_cnt, std::shared_ptr<OrthoCamera> camera)
+		:camera(camera)
 	{
 		this->entity_manager = std::make_shared<EntityManager>();
 		this->quad_renderer  = std::make_shared<QuadRenderer>(max_quad_cnt, camera);
@@ -20,16 +21,11 @@ namespace Sparky {
 
 	UIElement* UIRenderer::get_focused_ui()
 	{
-		int x, y;
-		SDL_GetMouseState(&x, &y);
-
-		// Getting window width and height
-		int w, h;
-		SDL_Window* sdl_window = SDL_GL_GetCurrentWindow();
-		SDL_GetWindowSize(sdl_window, &w, &h);
-
-		// Reversing the `y-axis` of SDL to Opengl (+y = down & -y = up) => (+y = up & -y = down)
-		y = h - y;
+		// Getting mouse position
+		int new_x, new_y;
+		glm::vec2 m_pos = Util::get_mouse_pos(this->camera);
+		new_x = m_pos.x;
+		new_y = m_pos.y;
 
 		for (auto& i : this->elements)
 		{
@@ -38,8 +34,8 @@ namespace Sparky {
 			glm::vec2 size = tcomp->get_size();
 
 			// Checking for intersection
-			if (pos.x < x && x < pos.x + size.x)
-				if (pos.y < y && y < pos.y + size.y)
+			if (pos.x < new_x && new_x < pos.x + size.x)
+				if (pos.y < new_y && new_y < pos.y + size.y)
 					return i.get();
 		}
 		return nullptr;

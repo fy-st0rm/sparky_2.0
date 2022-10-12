@@ -20,7 +20,7 @@ public:
 		std::shared_ptr<Sparky::EntityManager> manager = ui_renderer->get_entity_manager();
 
 		this->ui_entity = manager->add_entity<Sparky::Entity>(manager);
-		this->ui_entity->add_component<Sparky::TransformComponent>(pos, size);
+		this->ui_entity->add_component<Sparky::TransformComponent>(pos, size, glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(1,0,0)));
 		this->ui_entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), this->white);
 	}
 

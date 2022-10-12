@@ -1,5 +1,9 @@
 #include "dependency.h"
 
+// Core
+#include "core/core.h"
+#include "core/util.h"
+
 // Application
 #include "application/application.h"
 #include "application/scene.h"
