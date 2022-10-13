@@ -22,12 +22,21 @@ namespace Sparky {
 			return element.get();
 		}
 
+		void remove_ui_element(const std::string& name)
+		{
+			if (this->elements.find(name) == this->elements.end())
+				Log::error("UI element with name `" + name + "` cannot be found.", SPARKY_NULL);
+			this->elements.erase(name);
+		}
+
 		void update();
 		void handle_event(SparkyEvent& event);
 		void print_buffer();
 
 	public:
+		std::shared_ptr<OrthoCamera> get_camera() const { return this->camera; }
 		std::shared_ptr<EntityManager> get_entity_manager()    const { return this->entity_manager; }
+		std::shared_ptr<QuadRenderer> get_quad_renderer() const { return this->quad_renderer; }
 		std::unordered_map<std::string, std::shared_ptr<UIElement>> get_elements() const { return this->elements; }
 		UIElement* get_focused_ui();
 
