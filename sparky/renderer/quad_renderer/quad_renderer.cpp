@@ -130,7 +130,7 @@ namespace Sparky {
 		glm::vec4 pos1, pos2, pos3, pos4;
 		
 		// Changing the rotation position to the middle of the quad
-		glm::vec3 _pos = { -(size.x / 2), 0.0f, 0.0f };
+		glm::vec3 _pos = { -(size.x / 2), -(size.y / 2), 0.0f };
 		pos1 = glm::vec4(_pos, 0) * rotation;
 		pos2 = glm::vec4(_pos.x + size.x, _pos.y, _pos.z, 0) * rotation;
 		pos3 = glm::vec4(_pos.x + size.x, _pos.y + size.y, _pos.z, 0) * rotation;
@@ -142,10 +142,10 @@ namespace Sparky {
 		pos3.x += pos.x + (size.x / 2);
 		pos4.x += pos.x + (size.x / 2);
 
-		pos1.y += pos.y;
-		pos2.y += pos.y;
-		pos3.y += pos.y;
-		pos4.y += pos.y;
+		pos1.y += pos.y + (size.y / 2);
+		pos2.y += pos.y + (size.y / 2);
+		pos3.y += pos.y + (size.y / 2);
+		pos4.y += pos.y + (size.y / 2);
 	
 		// Quad position
 		quad.vertex[0].pos = glm::vec3(pos1.x, pos1.y, pos1.z);
