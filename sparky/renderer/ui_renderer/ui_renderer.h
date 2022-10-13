@@ -26,6 +26,10 @@ namespace Sparky {
 		{
 			if (this->elements.find(name) == this->elements.end())
 				Log::error("UI element with name `" + name + "` cannot be found.", SPARKY_NULL);
+
+			// Removing from entity manager and ui registry
+			std::shared_ptr<UIElement> element = this->elements[name];
+			element->ui_entity->destroy();
 			this->elements.erase(name);
 		}
 
