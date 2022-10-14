@@ -29,12 +29,17 @@ namespace Sparky {
 
 			// Removing from entity manager and ui registry
 			std::shared_ptr<UIElement> element = this->elements[name];
-			element->ui_entity->destroy();
+			this->entity_manager->remove_entity_by_id(element->ui_entity->get_id());
 			this->elements.erase(name);
 		}
 
 		void update();
 		void handle_event(SparkyEvent& event);
+		void clear_buffer()
+		{
+			this->entity_manager->clear_buffer();
+			this->elements.clear();
+		}
 		void print_buffer();
 
 	public:

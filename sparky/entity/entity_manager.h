@@ -16,6 +16,9 @@ namespace Sparky {
 	
 	public:
 		void remove_entity(std::shared_ptr<Entity> entity);
+		void remove_entity_by_id(const std::string& id);
+		void clear_buffer();
+
 
 		Entity* get_entity(const std::string& id)
 		{

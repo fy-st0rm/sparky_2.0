@@ -7,6 +7,23 @@ namespace Sparky {
 		this->entity_buffer.erase(entity->get_id());
 	}
 
+	void EntityManager::remove_entity_by_id(const std::string& id)
+	{
+		if (this->entity_buffer.find(id) == this->entity_buffer.end())
+			Log::error("Entity with id `" + id + "` cannot be found.", SPARKY_NULL);
+		this->entity_buffer[id].reset();
+	}
+
+	void EntityManager::clear_buffer()
+	{
+		for (auto i: this->entity_buffer)
+			i.second.reset();
+		this->transform_entity.clear();
+		this->render_entity.clear();
+		this->box_collider_entity.clear();
+		this->animation_entity.clear();
+	}
+
 	void EntityManager::update(std::shared_ptr<QuadRenderer> renderer)
 	{
 		this->update_collision(renderer);
