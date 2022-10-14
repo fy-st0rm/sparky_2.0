@@ -4,7 +4,7 @@ OUT = libsparky.a
 LINC = -I. -Ivendor/GLEW/include -Ivendor/SDL2_64bit/include -Ivendor/SDL2_64bit/include/SDL2 -Ivendor/imgui/
 
 win:
-	echo "[COMPILING]: Sparky2.0 for Windows."
+	@echo ==--[COMPILING]: Sparky2.0 for Windows.--==
 	$(MAKE) --no-print-directory win_cmp_core
 	$(MAKE) --no-print-directory win_cmp_imgui
 	$(MAKE) --no-print-directory win_cmp_gui
@@ -19,7 +19,7 @@ win:
 	$(MAKE) --no-print-directory win_cmp_app
 	$(MAKE) --no-print-directory win_build
 	$(MAKE) --no-print-directory win_clean
-	echo "[SUCESS]: Library of Sparky2.0 are found in `bin` folder"
+	@echo ==--[SUCESS]: Library of Sparky2.0 are found in `bin` folder--==
 
 win_reset:
 	erase ..\bin\*.a 

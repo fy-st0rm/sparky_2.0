@@ -22,6 +22,13 @@ namespace Sparky {
 			return element.get();
 		}
 
+		UIElement* get_ui_element(const std::string& name)
+		{
+			if (this->elements.find(name) == this->elements.end())
+				Log::error("UI element with name`" + name + "` doesnt exsits.", SPARKY_NULL);
+			return this->elements[name].get();
+		}
+
 		void remove_ui_element(const std::string& name)
 		{
 			if (this->elements.find(name) == this->elements.end())
