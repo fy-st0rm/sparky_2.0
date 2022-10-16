@@ -6,8 +6,6 @@
 //TODO: Culling of the entities which are not in the screen
 
 namespace Sparky {
-	class Entity;
-
 	class EntityManager
 	{
 	public:
@@ -54,7 +52,10 @@ namespace Sparky {
 			{
 				this->animation_entity.push_back(entity->get_id());
 			}
-			assert((4 == COMPONENT_AMT) && "New component needs to be handled here.");
+			else if (typeid(T) == typeid(TagComponent))
+			{
+			}
+			assert((5 == COMPONENT_AMT) && "New component needs to be handled here.");
 		}
 
 		template<typename T>
@@ -88,7 +89,10 @@ namespace Sparky {
 					this->animation_entity.end()
 				);
 			}
-			assert((4 == COMPONENT_AMT) && "New component needs to be handled here.");
+			else if (typeid(T) == typeid(TagComponent))
+			{
+			}
+			assert((5 == COMPONENT_AMT) && "New component needs to be handled here.");
 		}
 	
 	public:

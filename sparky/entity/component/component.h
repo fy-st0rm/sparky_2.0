@@ -3,10 +3,13 @@
 #include "../../texture/texture.h"
 
 namespace Sparky {
+	class Entity;
+
 	#define TRANSFORM_COMPONENT    "SparkyTransformComponent"
 	#define RENDER_COMPONENT       "SparkyRenderComponent"
 	#define BOX_COLLIDER_COMPONENT "SparkyBoxColliderComponent"
 	#define ANIMATION_COMPONENT    "SparkyAnimationComponent"
+	#define TAG_COMPONENT          "SparkyTagComponent"
 
 	enum CompCount
 	{
@@ -14,6 +17,7 @@ namespace Sparky {
 		__RENDER__,
 		__BOX_COLLIDER__,
 		__ANIMATION__,
+		__TAG__,
 		COMPONENT_AMT
 	};
 
@@ -107,6 +111,10 @@ namespace Sparky {
 	class BoxColliderComponent : public Component
 	{
 	public:
+		std::string name = BOX_COLLIDER_COMPONENT;
+		bool trigger = false;
+
+	public:
 		BoxColliderComponent() 
 		{
 			this->reset_hits();
@@ -116,12 +124,18 @@ namespace Sparky {
 		{
 			this->reset_hits();
 		}
+
+		BoxColliderComponent(glm::vec4 rect, bool trigger)
+			:rect(rect), trigger(trigger)
+		{
+			this->reset_hits();
+		}
 		~BoxColliderComponent() {}
 
 	public:
 		void reset_hits();
 		void sync_with_transform(TransformComponent* comp);
-		bool intersect(BoxColliderComponent* other);
+		bool intersect(BoxColliderComponent* other, std::shared_ptr<Entity> entity);
 		void resolve_intersection(BoxColliderComponent* other);
 
 	public:
@@ -131,9 +145,16 @@ namespace Sparky {
 		std::unordered_map<std::string, bool> get_hits()    const { return this->hits; }
 		void set_hits(std::unordered_map<std::string, bool> hits) { this->hits = hits; }
 
+		Entity* get_collided_entity()
+		{
+			if (this->collided_entity) return this->collided_entity.get();
+			return nullptr;
+		}
+
 	private:
 		glm::vec4 rect;
 		std::unordered_map<std::string, bool> hits;
+		std::shared_ptr<Entity> collided_entity = nullptr;
 	};
 	
 
@@ -209,6 +230,19 @@ namespace Sparky {
 		float anime_idx = 0.0f;
 		std::unordered_map<std::string, AnimationNode> state_register;
 		AnimationNode curr_node;
+	};
+
+
+	class TagComponent : public Component
+	{
+	public:
+		std::string name = TAG_COMPONENT;
+		std::string tag = "ENTITY";
+
+	public:
+		TagComponent() {}
+		TagComponent(const std::string& tag): tag(tag) {}
+		~TagComponent() {}
 	};
 }
 

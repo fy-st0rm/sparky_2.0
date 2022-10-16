@@ -97,10 +97,9 @@ namespace Sparky {
 
 				// Reseting the hit results of target `a`
 				a_comp->reset_hits();
-				std::unordered_map<std::string, bool> hits = a_comp->get_hits();
 
 				// Resolvuing the intersection
-				if (a_comp->intersect(b_comp))
+				if (a_comp->intersect(b_comp, b))
 				{
 					a_comp->resolve_intersection(b_comp);
 				}

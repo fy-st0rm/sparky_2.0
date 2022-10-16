@@ -17,18 +17,24 @@ namespace Sparky {
 		this->set_rect(glm::vec4(pos.x, pos.y, size.x, size.y));
 	}
 
-	bool BoxColliderComponent::intersect(BoxColliderComponent* other)
+	bool BoxColliderComponent::intersect(BoxColliderComponent* other, std::shared_ptr<Entity> entity)
 	{
 		glm::vec4 rect_b = other->get_rect();
 	
 		if(this->rect.x < rect_b.x + rect_b.z && this->rect.x + this->rect.z > rect_b.x && 
 			this->rect.y < rect_b.y + rect_b.w && this->rect.y + this->rect.w > rect_b.y)
-			return true;
+			{
+				this->collided_entity = entity;
+				return true;
+			}
 		return false;
 	}
 
 	void BoxColliderComponent::resolve_intersection(BoxColliderComponent* other)
 	{
+		if (this->trigger)  return;
+		if (other->trigger) return;
+
 		glm::vec4 rect_b = other->get_rect();
 
 		// Getting left, right, up and down intersections
@@ -61,5 +67,7 @@ namespace Sparky {
 		{
 			this->rect.y = rect_b.y + rect_b.w;
 		}
+
+		this->collided_entity = nullptr;
 	}
 }

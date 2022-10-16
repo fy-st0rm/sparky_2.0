@@ -27,7 +27,7 @@ namespace Sparky {
 				this->manager->remove_entity_from_comp<BoxColliderComponent>(this->self);
 			else if (i.first == ANIMATION_COMPONENT)
 				this->manager->remove_entity_from_comp<AnimationComponent>(this->self);
-			assert((4 == COMPONENT_AMT) && "New component needs to be handled here.");
+			assert((5 == COMPONENT_AMT) && "New component needs to be handled here.");
 
 			this->manager->remove_entity(this->self);
 		}
