@@ -17,7 +17,6 @@ namespace Sparky {
 		void remove_entity_by_id(const std::string& id);
 		void clear_buffer();
 
-
 		Entity* get_entity(const std::string& id)
 		{
 			if (this->entity_buffer.find(id) == this->entity_buffer.end())

@@ -99,7 +99,7 @@ namespace Sparky {
 				a_comp->reset_hits();
 
 				// Resolvuing the intersection
-				if (a_comp->intersect(b_comp, b))
+				if (a_comp->intersect(b_comp, b.get()))
 				{
 					a_comp->resolve_intersection(b_comp);
 				}

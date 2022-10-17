@@ -135,7 +135,7 @@ namespace Sparky {
 	public:
 		void reset_hits();
 		void sync_with_transform(TransformComponent* comp);
-		bool intersect(BoxColliderComponent* other, std::shared_ptr<Entity> entity);
+		bool intersect(BoxColliderComponent* other, Entity* entity);
 		void resolve_intersection(BoxColliderComponent* other);
 
 	public:
@@ -147,14 +147,14 @@ namespace Sparky {
 
 		Entity* get_collided_entity()
 		{
-			if (this->collided_entity) return this->collided_entity.get();
+			if (this->collided_entity) return this->collided_entity;
 			return nullptr;
 		}
 
 	private:
 		glm::vec4 rect;
 		std::unordered_map<std::string, bool> hits;
-		std::shared_ptr<Entity> collided_entity = nullptr;
+		Entity* collided_entity = nullptr;
 	};
 	
 

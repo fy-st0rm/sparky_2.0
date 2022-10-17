@@ -28,9 +28,8 @@ namespace Sparky {
 			else if (i.first == ANIMATION_COMPONENT)
 				this->manager->remove_entity_from_comp<AnimationComponent>(this->self);
 			assert((5 == COMPONENT_AMT) && "New component needs to be handled here.");
-
-			this->manager->remove_entity(this->self);
 		}
+		this->manager->remove_entity(this->self);
 	}
 
 	void Entity::print_components()
