@@ -1,10 +1,15 @@
 CC  = g++
+FLAG = -w
 OUT = libsparky.a
-INC = -I.
+LINC = -I. -Ivendor/GLEW/include -Ivendor/SDL2_64bit/include -Ivendor/SDL2_64bit/include/SDL2 -Ivendor/imgui/
 
 linux:
-	echo "[COMPILING]: Sparky2.0 for Linux."
+	@echo ==--[COMPILING]: Sparky2.0 for Linux.--==
 	$(MAKE) --no-print-directory linux_cmp_core
+	$(MAKE) --no-print-directory linux_cmp_imgui
+	$(MAKE) --no-print-directory linux_cmp_gui
+	$(MAKE) --no-print-directory linux_cmp_entity
+	$(MAKE) --no-print-directory linux_cmp_component
 	$(MAKE) --no-print-directory linux_cmp_window
 	$(MAKE) --no-print-directory linux_cmp_buffers
 	$(MAKE) --no-print-directory linux_cmp_shader
@@ -14,7 +19,7 @@ linux:
 	$(MAKE) --no-print-directory linux_cmp_app
 	$(MAKE) --no-print-directory linux_build
 	$(MAKE) --no-print-directory linux_clean
-	echo "[SUCESS]: Library of Sparky2.0 are found in `bin` folder"
+	@echo ==--[SUCESS]: Library of Sparky2.0 are found in `bin` folder--==
 
 linux_reset:
 	rm *.a ../bin/
@@ -27,25 +32,41 @@ linux_clean:
 	rm *.o
 
 linux_cmp_core:
-	$(CC) $(INC) -c core/*.cpp
+	$(CC) $(FLAG) $(LINC) -c core/*.cpp
+
+linux_cmp_imgui:
+	$(CC) $(FLAG) $(LINC) -c vendor/imgui/*.cpp
+	$(CC) $(FLAG) $(LINC) -c vendor/imgui/backends/imgui_impl_sdl.cpp
+	$(CC) $(FLAG) $(LINC) -c vendor/imgui/backends/imgui_impl_opengl3.cpp
+
+linux_cmp_gui:
+	$(CC) $(FLAG) $(LINC) -c gui/*.cpp
+
+linux_cmp_entity:
+	$(CC) $(FLAG) $(LINC) -c entity/*.cpp
+
+linux_cmp_component:
+	$(CC) $(FLAG) $(LINC) -c entity/component/*.cpp
 
 linux_cmp_window:
-	$(CC) $(INC) -c window/*.cpp
+	$(CC) $(FLAG) $(LINC) -c window/*.cpp
 
 linux_cmp_buffers:
-	$(CC) $(INC) -c buffers/*.cpp
+	$(CC) $(FLAG) $(LINC) -c buffers/*.cpp
 
 linux_cmp_shader:
-	$(CC) $(INC) -c shader/*.cpp
+	$(CC) $(FLAG) $(LINC) -c shader/*.cpp
 
 linux_cmp_camera:
-	$(CC) $(INC) -c camera/*.cpp
+	$(CC) $(FLAG) $(LINC) -c camera/*.cpp
 
 linux_cmp_texture:
-	$(CC) $(INC) -c texture/*.cpp
+	$(CC) $(FLAG) $(LINC) -c texture/*.cpp
 
 linux_cmp_renderer:
-	$(CC) $(INC) -c renderer/quad_renderer/*.cpp
+	$(CC) $(FLAG) $(LINC) -c renderer/quad_renderer/*.cpp
+	$(CC) $(FLAG) $(LINC) -c renderer/text_renderer/*.cpp
+	$(CC) $(FLAG) $(LINC) -c renderer/ui_renderer/*.cpp
 
 linux_cmp_app:
-	$(CC) $(INC) -c application/*.cpp
+	$(CC) $(FLAG) $(LINC) -c application/*.cpp
