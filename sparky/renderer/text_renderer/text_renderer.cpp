@@ -1,4 +1,4 @@
-#include "Text_renderer.h"
+#include "text_renderer.h"
 
 namespace Sparky {
 	TextRenderer::TextRenderer(const std::string& font_path, int font_size, int max_quad_cnt, std::shared_ptr<OrthoCamera> camera)

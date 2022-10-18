@@ -1,7 +1,7 @@
 CC  = g++
 FLAG = -w
 OUT = libsparky.a
-LINC = -I. -Ivendor/GLEW/include -Ivendor/SDL2_64bit/include -Ivendor/SDL2_64bit/include/SDL2 -Ivendor/imgui/
+LINC = -I. -Ivendor/imgui/ -I/usr/include/SDL2
 
 linux:
 	@echo ==--[COMPILING]: Sparky2.0 for Linux.--==
