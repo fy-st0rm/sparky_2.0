@@ -5,9 +5,6 @@
 #include "../window/window.h"
 #include "../gui/gui.h"
 
-// TODO: Add opencv support for textures -lopencv_core "-lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui -lprotobuf -lopencv_videoio"
-// TODO: Text rendering
-// TODO: Simple UI library or utilize imgui
 
 namespace Sparky {
 	class Application

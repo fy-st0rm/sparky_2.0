@@ -17,8 +17,6 @@ namespace Sparky {
 	{
 		for (auto i : this->components)
 		{
-			this->components.erase(i.first);
-
 			if (i.first == TRANSFORM_COMPONENT)
 				this->manager->remove_entity_from_comp<TransformComponent>(this->self);
 			else if (i.first == RENDER_COMPONENT)
@@ -29,6 +27,8 @@ namespace Sparky {
 				this->manager->remove_entity_from_comp<AnimationComponent>(this->self);
 			assert((5 == COMPONENT_AMT) && "New component needs to be handled here.");
 		}
+
+		this->components.clear();
 		this->manager->remove_entity(this->self);
 	}
 
