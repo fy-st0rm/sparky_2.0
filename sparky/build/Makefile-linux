@@ -22,7 +22,7 @@ linux:
 	@echo ==--[SUCESS]: Library of Sparky2.0 are found in `bin` folder--==
 
 linux_reset:
-	rm *.a ../bin/
+	rm ../bin/*
 
 linux_build:
 	ar rcf $(OUT) *.o
